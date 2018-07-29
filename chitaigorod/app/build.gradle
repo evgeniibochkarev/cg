@@ -20,5 +20,8 @@ android {
 }
 
 dependencies {
+	compile 'com.android.support:appcompat-v7:+'
+	compile 'com.github.arimorty:floatingsearchview:2.1.1'
+
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
