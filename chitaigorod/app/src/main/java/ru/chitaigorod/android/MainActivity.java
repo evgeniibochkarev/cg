@@ -8,17 +8,37 @@ import android.net.*;
 import android.annotation.*;
 import android.util.*;
 import android.support.annotation.*;
+import ru.chitaigorod.android.view.*;
+import com.arlib.floatingsearchview.*;
+import ru.chitaigorod.android.utils.*;
+import java.security.*;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends AppCompatActivity implements BaseFragment.BaseFragmentCallbacks
 {
-	private WebView wv;
+
+	@Override
+	public void onLoadPage(String url)
+	{
+		wv.loadUrl(url);
+	}
+
+	@Override
+	public void onAttachSearchViewToDrawer(FloatingSearchView searchView)
+	{
+		// TODO: Implement this method
+	}
 	
-    @Override
+	public final String Tag = "MainPage";
+	private WebView wv;
+	private AppCompatActivity activity;
+   
+	@Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 		
+		activity = this;
 		wv = (WebView) findViewById(R.id.webView);
 		
 		wv.setWebViewClient(new MyWebViewClient());
@@ -34,6 +54,14 @@ public class MainActivity extends AppCompatActivity
 	
 	private class MyWebViewClient extends WebViewClient 
 	{
+
+		@Override
+		public void onPageFinished(WebView view, String url)
+		{
+			String tag = Utils.router(url);
+			view.loadUrl(Utils.getJSByTag( activity, tag));
+		}
+			
 			@SuppressWarnings("deprecation")
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -49,25 +77,35 @@ public class MainActivity extends AppCompatActivity
 			}
 
 			private boolean handleUri(WebView wv, final Uri uri) {
-		
-				final String host = uri.getHost();
-				final String scheme = uri.getScheme();
-				
-				wv.loadUrl(uri.toString());
-				// Based on some condition you need to determine if you are going to load the url 
-				// in your web view itself or in a browser. 
-				// You can use `host` or `scheme` or any part of the `uri` to decide.
-				return true;
+				if(uri.getScheme() == "https"){
+					wv.loadUrl(uri.toString());
+					return true;
+				}else{
+					
+					return false;
+				}
 			}
 	}
 	
 	private class MyWebChromeClient extends WebChromeClient 
 	{
 		@Override
-		public boolean onConsoleMessage(ConsoleMessage consoleMessage)
+		public boolean onConsoleMessage(ConsoleMessage cmsg)
 		{
+			Log.d(Tag, cmsg.message());
+			
+			if (cmsg.message().startsWith("MAGIC"))
+			{
+				String msg = cmsg.message().substring(5); // strip off prefix
+
+				/* process HTML */
+
+				return true;
+			}
+
+			return false;
 			// TODO: Implement this method
-			return super.onConsoleMessage(consoleMessage);
+			//return super.onConsoleMessage(consoleMessage);
 		}
 		
 	}
