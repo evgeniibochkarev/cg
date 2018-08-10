@@ -1,0 +1,6 @@
+<resources>
+	<declare-styleable name="ShopAppBar">
+		<attr name="showCart" format="boolean" />
+		
+	</declare-styleable>
+</resources>

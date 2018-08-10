@@ -1,35 +1,28 @@
 package ru.chitaigorod.android;
 
-import android.app.*;
+
 import android.os.*;
 import android.support.v7.app.AppCompatActivity;
-import android.webkit.*;
-import android.net.*;
-import android.annotation.*;
-import android.util.*;
-import android.support.annotation.*;
 import ru.chitaigorod.android.view.*;
 import com.arlib.floatingsearchview.*;
-import ru.chitaigorod.android.utils.*;
-import java.security.*;
+import android.support.v4.app.Fragment;
+import android.support.v4.widget.DrawerLayout;
+import java.util.*;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 
 public class MainActivity extends AppCompatActivity implements BaseFragment.BaseFragmentCallbacks
 {
 
-	@Override
-	public void onLoadPage(String url)
-	{
-		wv.loadUrl(url);
-	}
 
 	@Override
 	public void onAttachSearchViewToDrawer(FloatingSearchView searchView)
 	{
-		// TODO: Implement this method
+		searchView.attachNavigationDrawerToMenuButton(mDrawerLayout);
 	}
 	
 	public final String Tag = "MainPage";
-	private WebView wv;
+	private DrawerLayout mDrawerLayout;
 	private AppCompatActivity activity;
    
 	@Override
@@ -39,74 +32,74 @@ public class MainActivity extends AppCompatActivity implements BaseFragment.Base
         setContentView(R.layout.main);
 		
 		activity = this;
-		wv = (WebView) findViewById(R.id.webView);
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+		showFragment(new ItemListCatalogFragment("https://www.chitai-gorod.ru/catalog/books/9646/"), ItemListCatalogFragment.TAG);
+		showFragment(new ItemListCatalogFragment("https://www.chitai-gorod.ru/catalog/books/9645/"), ItemListCatalogFragment.TAG);
+	}
+	
+
+    @Override
+    public void onBackPressed() {
+
+        //super.onBackPressed();
+		//List fragments = getSupportFragmentManager().getFragments();
 		
-		wv.setWebViewClient(new MyWebViewClient());
-		wv.setWebChromeClient(new MyWebChromeClient());
-		// включаем поддержку JavaScript
-		wv.getSettings().setDomStorageEnabled(true);
-		wv.getSettings().setJavaScriptEnabled(true);
-		// указываем страницу загрузки
-		wv.loadUrl("https://chitai-gorod.ru/"); 
-	}
-	
-	
-	
-	private class MyWebViewClient extends WebViewClient 
-	{
-
-		@Override
-		public void onPageFinished(WebView view, String url)
-		{
-			String tag = Utils.router(url);
-			view.loadUrl(Utils.getJSByTag( activity, tag));
+        //BaseFragment currentFragment = (BaseFragment) fragments.get(fragments.size() - 1);
+		Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+		if(f instanceof BaseFragment) {
+			if (((BaseFragment) f).onActivityBackPress()) {
+				//currentFragment.onDetach();
+				super.onBackPressed();
+			}
 		}
-			
-			@SuppressWarnings("deprecation")
-			@Override
-			public boolean shouldOverrideUrlLoading(WebView view, String url) {
-				final Uri uri = Uri.parse(url);
-				return handleUri(view, uri);
-			}
+    
+		//FragmentManager fm = getSupportFragmentManager();
+		//fm.popBackStack(null, BaseFragment);
+        
+    }
 
-			@RequiresApi(Build.VERSION_CODES.N)
-			@Override
-			public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-				final Uri uri = request.getUrl();
-				return handleUri(view, uri);
-			}
-
-			private boolean handleUri(WebView wv, final Uri uri) {
-				if(uri.getScheme() == "https"){
-					wv.loadUrl(uri.toString());
-					return true;
-				}else{
-					
-					return false;
-				}
-			}
-	}
+	String mSelectedTag;
+	@Override
+	public void showFragment(Fragment frag, String tag) {
+		String oldTag = mSelectedTag;
+		mSelectedTag = tag;
+		final FragmentManager fm = getSupportFragmentManager();
+		final FragmentTransaction ft = fm.beginTransaction();
+		final Fragment oldFragment = fm.findFragmentByTag(oldTag);
+		final Fragment fragment = fm.findFragmentByTag(tag);
 	
-	private class MyWebChromeClient extends WebChromeClient 
-	{
-		@Override
-		public boolean onConsoleMessage(ConsoleMessage cmsg)
-		{
-			Log.d(Tag, cmsg.message());
-			
-			if (cmsg.message().startsWith("MAGIC"))
-			{
-				String msg = cmsg.message().substring(5); // strip off prefix
-
-				/* process HTML */
-
-				return true;
-			}
-
-			return false;
-			// TODO: Implement this method
-			//return super.onConsoleMessage(consoleMessage);
+		if (oldFragment != null && !tag.equals(oldTag)) {
+			ft.detach(oldFragment);
 		}
-		
+
+		if (fragment == null) {
+			ft.addToBackStack(tag)
+				.replace(R.id.fragment_container, frag, tag);
+		} else {
+			if (fragment.isDetached()) {
+				ft.attach(fragment);
+			}
+		}
+		ft.commit();
 	}
+	/*
+	private Fragment getContentFragment(String tag) {
+		Fragment fragment = null;
+		if (MainPageFragment.TAG.equals(tag)) {
+			fragment = new MainPageFragment();
+		} else if (ItemListCatalogFragment.TAG.equals(tag)) {
+			fragment = new ItemListCatalogFragment();
+		}
+		return fragment;
+	}*/
+	/*
+	@Override
+	public void showFragment(Fragment fragment, String tag) {
+        getSupportFragmentManager()
+			.beginTransaction()
+			.addToBackStack(tag)
+			.add(R.id.fragment_container, fragment).commit();
+    }*/
+	
+	
 }

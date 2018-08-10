@@ -9,9 +9,11 @@ public class Utils
 		Uri uri = Uri.parse(url);
 		if(uri.getPathSegments().size() == 0){
 			return "MainPage";
-		}else{
-			return "";
 		}
+		if(uri.getPathSegments().size() == 3){
+			return "ItemListCatalog";
+		}
+			return "";
 	}
 	public static String getJSByTag(AppCompatActivity act,String inFile) {
         String tContents = "javascript:console.log('MAGIC'+document.getElementsByTagName('html')[0].innerHTML);";
