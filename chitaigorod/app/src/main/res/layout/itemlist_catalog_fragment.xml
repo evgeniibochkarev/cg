@@ -21,7 +21,7 @@
 			android:layout_width="match_parent"
             android:layout_height="match_parent"
 			app:showCart="true"
-            app:floatingSearch_dismissOnOutsideTouch="true"
+            app:floatingSearch_dismissOnOutsideTouch="false"
             app:floatingSearch_leftActionMode="showHome"
             app:floatingSearch_searchBarMarginLeft="@dimen/search_view_inset"         
             app:floatingSearch_searchBarMarginTop="@dimen/search_view_inset"

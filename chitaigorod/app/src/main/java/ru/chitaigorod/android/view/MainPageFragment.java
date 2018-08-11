@@ -12,7 +12,7 @@ import android.view.View.*;
 public class MainPageFragment extends BaseFragment
 {
 
-	final String TAG = "MainPageFragment";
+	public static final String TAG = "MainPageFragment";
 	@Override
 	public boolean onActivityBackPress()
 	{

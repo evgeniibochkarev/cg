@@ -18,7 +18,7 @@ public abstract class BaseFragment extends Fragment {
 
     public interface BaseFragmentCallbacks{
         void onAttachSearchViewToDrawer(FloatingSearchView searchView);
-		void showFragment(Fragment fragment, String tag);
+		//void showFragment(Fragment fragment, String tag);
 		void onBackPressed();
     }
 

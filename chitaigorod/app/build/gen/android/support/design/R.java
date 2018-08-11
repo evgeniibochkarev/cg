@@ -3184,7 +3184,7 @@ containing a value of this type.
         public static final int list_item=0x7f0a004b;
         public static final int main_content=0x7f0a0086;
         public static final int mainpagefragmentButton1=0x7f0a008c;
-        public static final int masked=0x7f0a00b5;
+        public static final int masked=0x7f0a00b4;
         public static final int media_actions=0x7f0a0093;
         public static final int menu_view=0x7f0a00ac;
         public static final int middle=0x7f0a003e;
@@ -3233,7 +3233,6 @@ containing a value of this type.
         public static final int search_mag_icon=0x7f0a006e;
         public static final int search_plate=0x7f0a006f;
         public static final int search_query_section=0x7f0a00a5;
-        public static final int search_results_list=0x7f0a00b3;
         public static final int search_src_text=0x7f0a0070;
         public static final int search_suggestions_section=0x7f0a00af;
         public static final int search_voice_btn=0x7f0a0074;
@@ -3279,7 +3278,7 @@ containing a value of this type.
         public static final int up=0x7f0a000e;
         public static final int useLogo=0x7f0a003a;
         public static final int view_offset_helper=0x7f0a0004;
-        public static final int visible=0x7f0a00b4;
+        public static final int visible=0x7f0a00b3;
         public static final int withText=0x7f0a0043;
         public static final int wrap_content=0x7f0a003c;
     }

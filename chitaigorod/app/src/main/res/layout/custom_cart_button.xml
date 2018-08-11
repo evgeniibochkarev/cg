@@ -28,7 +28,7 @@
 		android:gravity="center"
 		android:padding="1dp"
 		android:textColor="@android:color/white"
-		android:text="0"
+		android:text="1"
 		android:textSize="10sp"/>
 
 </FrameLayout>

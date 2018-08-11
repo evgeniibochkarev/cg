@@ -13,17 +13,21 @@ import android.widget.TextView;
 import android.content.res.TypedArray;
 import java.util.function.*;
 import android.support.v7.widget.*;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+
 
 public class ShopAppBar extends RelativeLayout
 {
+	public final static String TAG = "ShopAppBar";
 	private View mMainLayout;
 	private FloatingSearchView mSearch;
 	private View mCartButton;
-	private RecyclerView mSearchResult;
-	
+	private Context ctx;	
 	public ShopAppBar(Context context, AttributeSet attrs) {
         super(context, attrs);
 
+		this.ctx = context;
 		LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
       
 		mMainLayout = inflate(getContext(), R.layout.shop_app_bar, this);
@@ -35,6 +39,11 @@ public class ShopAppBar extends RelativeLayout
 		
 		if(isShowCart){
 			mCartButton = layoutInflater.inflate(R.layout.custom_cart_button,  this, true);
+			SharedPreferences sPref = context.getSharedPreferences(TAG,context.MODE_PRIVATE);
+			String savedText = sPref.getString("cart_count", "0");
+			
+			setCartCount(savedText);
+			
 			
 			mSearch = new FloatingSearchView(context, attrs);
 		
@@ -45,18 +54,11 @@ public class ShopAppBar extends RelativeLayout
 			//layoutInflater.inflate( mSearch.get, this, true);
 			this.addView(mSearch);
 			
-			mSearchResult = (RecyclerView) mMainLayout.findViewById(R.id.search_results_list);
 			setupSearchBar();
 		}
 	}	
-	public void showSearchResults(){
-		mSearchResult.setVisibility(View.VISIBLE);	
-	}
+	
 	public Boolean onBackPressed(){
-		if(mSearchResult.getVisibility() == View.VISIBLE){
-			mSearchResult.setVisibility(View.GONE);
-			return false;
-		}
 		return true;
 	}
 	private void setupSearchBar(){
@@ -72,6 +74,11 @@ public class ShopAppBar extends RelativeLayout
 		
 	}
 	public void setCartCount(String count){
+		SharedPreferences sPref = ctx.getSharedPreferences(TAG,ctx.MODE_PRIVATE);
+		Editor ed = sPref.edit();
+		ed.putString("cart_count", count);
+		ed.commit();
+			
 		TextView tv = (TextView) mMainLayout.findViewById(R.id.badge_cart_textview);
 		tv.setText(count);
 	}

@@ -23,9 +23,12 @@ public class ItemListCatalogFragment extends BaseFragment
 	@Override
 	public boolean onActivityBackPress()
 	{
+		
 		if(mHeader.onBackPressed()){
+			mHeader.getSearchView().setSearchFocused(false);
 			return true;
 		}
+		
 		return false;
 	}
 	private WrapperHTML wrap;
@@ -50,14 +53,29 @@ public class ItemListCatalogFragment extends BaseFragment
 
 		setupSearchBar(view);
     }
+	
 	private void setupSearchBar(View view){
 		mHeader = (ShopAppBar) view.findViewById(R.id.my_search_view);
 
-		
+		mHeader.getSearchView().setOnFocusChangeListener(new FloatingSearchView.OnFocusChangeListener() {
+				@Override
+				public void onFocus()
+				{
+					if(Utils.getFragmentByTag(getActivity(), SearchFragment.TAG) == null){
+						Utils.switchFragment(R.id.fragment_container, new SearchFragment(), getActivity(), SearchFragment.TAG);
+						mHeader.getSearchView().setSearchFocused(false);
+					}
+				}
+				@Override
+				public void onFocusCleared()
+				{			
+				}				
+		});
 		
 		mHeader.getSearchView().setOnHomeActionClickListener(new FloatingSearchView.OnHomeActionClickListener() {
 				@Override
 				public void onHomeClicked() {
+					//mHeader.getSearchView().setSearchFocused(false);
 					backPressed();
 					//Log.d(TAG, "onHomeClicked()");
 				}
@@ -69,7 +87,7 @@ public class ItemListCatalogFragment extends BaseFragment
 	public void onDetach()
 	{
 		super.onDetach();
-		wrap = null;
+		
 	}
 
 	private class Parser implements WrapperHTML.WrapperListener
@@ -87,6 +105,7 @@ public class ItemListCatalogFragment extends BaseFragment
 	public void onResume()
 	{
 		super.onResume();
+		mHeader.getSearchView().setActivated(false);
 		renderPage(mHTML);
 	}
 	
