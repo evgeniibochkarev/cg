@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+    
+    <tab
+        id="@+id/tab_main_page"
+        icon="@drawable/ic_favorites"
+        title="Магазин"
+        barColorWhenSelected="#fff" />
+    <tab
+        id="@+id/tab_discount"
+        icon="@drawable/ic_nearby"
+        title="Акции"
+        barColorWhenSelected="#fff" />
+    <tab
+        id="@+id/tab_catalog"
+        icon="@drawable/ic_friends"
+        title="Каталог"
+        barColorWhenSelected="#fff" />
+    <tab
+        id="@+id/tab_cabinet"
+        icon="@drawable/ic_friends"
+        title="Кабинет"
+        barColorWhenSelected="#fff" />
+	<tab
+        id="@+id/tab_info"
+        icon="@drawable/ic_restaurants"
+        title="Инфо"
+        barColorWhenSelected="#fff" />
+</tabs>
+
