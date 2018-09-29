@@ -102,8 +102,8 @@ public class ProductsRecyclerAdapter extends RecyclerView.Adapter<ProductsRecycl
 		{
 			if(rF.getAvailable()){
 				String status = item.getOtherProp().getString("status");	
-				if(status.equals("IN_STOCK") ){
-					return true;
+				if(!status.equals("IN_STOCK") ){
+					return false;
 				}
 			}
 		}
@@ -112,7 +112,7 @@ public class ProductsRecyclerAdapter extends RecyclerView.Adapter<ProductsRecycl
 
 		
 		
-		return false;
+		return true;
 	}
 	
     // Create new views (invoked by the layout manager)
