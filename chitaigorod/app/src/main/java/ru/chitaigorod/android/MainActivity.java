@@ -14,23 +14,32 @@ import ru.chitaigorod.android.R;
 import ru.chitaigorod.android.UX.custom_view.*;
 import ru.chitaigorod.android.utils.*;
 import android.webkit.*;
+import ru.chitaigorod.android.UX.dialogs.*;
+import java.util.concurrent.*;
 
 
-public class MainActivity extends AppCompatActivity implements FragNavController.TransactionListener, FragNavController.RootFragmentListener ,  OnTabReselectListener, OnTabSelectListener, BaseFragment.FragmentNavigation// FragNavController.TransactionListener, FragNavController.RootFragmentListener ,ontab//BaseFragment.BaseFragmentCallbacks
+public class MainActivity extends AppCompatActivity implements FragNavController.TransactionListener, FragNavController.RootFragmentListener ,  OnTabReselectListener, OnTabSelectListener, BaseFragment.FragmentNavigation, BaseDialogFragment.FragmentNavigation// FragNavController.TransactionListener, FragNavController.RootFragmentListener ,ontab//BaseFragment.BaseFragmentCallbacks
 {
-	
 
+	@Override
+	public void setCartBadge(int count)
+	{
+		BottomBarTab nearby = mBottomBar.getTabWithId(R.id.tab_cart);
+		nearby.setBadgeCount(count);
+		
+	}
+	
 	@Override
 	public void onTabSelected(@IdRes int menuItemId) {
 		switch (menuItemId) {
 			case R.id.tab_main_page:
 				mNavController.switchTab(INDEX_MAIN_PAGE);
 				break;
-			case R.id.tab_discount:
-				mNavController.switchTab(INDEX_DISCOUNT);
+			case R.id.tab_cart:
+				mNavController.switchTab(INDEX_CART);
 				break;
-			case R.id.tab_catalog:
-				mNavController.switchTab(INDEX_CATALOG);
+			case R.id.tab_search:
+				mNavController.switchTab(INDEX_SEARCH);
 				break;
 			case R.id.tab_cabinet:
 				mNavController.switchTab(INDEX_CABINET);
@@ -50,11 +59,11 @@ public class MainActivity extends AppCompatActivity implements FragNavController
 			case R.id.tab_main_page:
 				mNavController.switchTab(INDEX_MAIN_PAGE);
 				break;
-			case R.id.tab_discount:
-				mNavController.switchTab(INDEX_DISCOUNT);
+			case R.id.tab_cart:
+				mNavController.switchTab(INDEX_CART);
 				break;
-			case R.id.tab_catalog:
-				mNavController.switchTab(INDEX_CATALOG);
+			case R.id.tab_search:
+				mNavController.switchTab(INDEX_SEARCH);
 				break;
 			case R.id.tab_cabinet:
 				mNavController.switchTab(INDEX_CABINET);
@@ -81,8 +90,8 @@ public class MainActivity extends AppCompatActivity implements FragNavController
     private WebView wv;
     //Better convention to properly name the indices what they are in your app
     private final int INDEX_MAIN_PAGE = FragNavController.TAB1;
-    private final int INDEX_DISCOUNT = FragNavController.TAB2;
-    private final int INDEX_CATALOG = FragNavController.TAB3;
+    private final int INDEX_CART = FragNavController.TAB2;
+    private final int INDEX_SEARCH = FragNavController.TAB3;
     private final int INDEX_CABINET = FragNavController.TAB4;
     private final int INDEX_INFO = FragNavController.TAB5;
 
@@ -128,6 +137,11 @@ public class MainActivity extends AppCompatActivity implements FragNavController
 			wv.loadUrl(req);
 		}
 	}
+	
+	public FragNavController getFragmentController(){
+		return mNavController;
+	}
+	
 	
 	@Override
     public void onBackPressed() {
@@ -185,7 +199,13 @@ public class MainActivity extends AppCompatActivity implements FragNavController
         }
     }
 
-    
+	public void showDialog(DialogFragment frg)
+	{
+		if (mNavController != null) {
+            mNavController.showDialogFragment(frg);//.pushFragment(fragment);
+        }
+	}
+	
     public void pushFragment(Fragment fragment) {
         if (mNavController != null) {
             mNavController.pushFragment(fragment);
@@ -223,6 +243,7 @@ public class MainActivity extends AppCompatActivity implements FragNavController
         }
     }
 
+	
     @Override
     public Fragment getRootFragment(int index) {
         switch (index) {
@@ -230,9 +251,9 @@ public class MainActivity extends AppCompatActivity implements FragNavController
             case FragNavController.TAB1:
                 return new MainPageFragment().newInstance();
             case FragNavController.TAB2:
-                return new DiscountFragment().newInstance();
+                return new CartFragment().newInstance();
             case FragNavController.TAB3:
-                return new CatalogFragment().newInstance();
+                return new SearchFragment().newInstance();
             case FragNavController.TAB4:
                 return new CabinetFragment().newInstance();
             case FragNavController.TAB5:

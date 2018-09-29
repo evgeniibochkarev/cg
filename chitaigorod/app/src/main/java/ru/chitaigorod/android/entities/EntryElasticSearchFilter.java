@@ -1,11 +1,11 @@
 package ru.chitaigorod.android.entities;
 import java.util.*;
 
-public class SearchFilter
+public class EntryElasticSearchFilter
 {
 	private HashMap<String, String> obj;
 	
-	public SearchFilter(){
+	public EntryElasticSearchFilter(){
 		obj = new HashMap<String, String>();
 		obj.put("author","not_set");
 		obj.put("seria","not_set");
@@ -13,7 +13,7 @@ public class SearchFilter
 		obj.put("year","not_set");
 	}
 	
-	public SearchFilter(HashMap hm){
+	public EntryElasticSearchFilter(HashMap hm){
 		obj = new HashMap<String, String>();
 		obj.putAll(hm);
 	}
@@ -30,7 +30,7 @@ public class SearchFilter
 	public void setYear(String str){
 		obj.put("year",str);
 	}
-	public HashMap getFilter(){
+	public HashMap getHashMap(){
 		return obj;
 	}
 }

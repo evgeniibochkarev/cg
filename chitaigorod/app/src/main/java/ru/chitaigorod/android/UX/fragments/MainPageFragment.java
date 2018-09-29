@@ -8,8 +8,17 @@ import android.widget.*;
 import android.view.View.*;
 import java.util.*;
 import ru.chitaigorod.android.entities.*;
+import org.json.*;
 
-public class MainPageFragment extends BaseFragment {
+public class MainPageFragment extends BaseFragment
+{
+
+	@Override
+	public void APIResponse(JSONObject json)
+	{
+		// TODO: Implement this method
+	}
+	
 
     
     public static MainPageFragment newInstance(){
@@ -36,9 +45,9 @@ public class MainPageFragment extends BaseFragment {
 				public void onClick(View p1)
 				{
 					if (mFragmentNavigation != null) {
-						SearchFilter filter = new SearchFilter();
+						EntryElasticSearchFilter elasticFilter = new EntryElasticSearchFilter();
 						
-						mFragmentNavigation.pushFragment(SearchFragment.newInstance("воровка", filter.getFilter()));
+						mFragmentNavigation.pushFragment(SearchFragment.newInstance("воровка", new EntryRecyclerSearchFilter(), elasticFilter));
 
 					}
 				}

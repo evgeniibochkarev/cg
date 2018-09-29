@@ -1,6 +1,9 @@
 var API = 
 	{
-		item:{}
+		item:{},
+		cart:{},
+		search:{},
+		city:{}
 	};
 requirejs.config({
   paths: {
@@ -33,32 +36,49 @@ API.search =
 		);}
 }*/
 
-define(['item', 'search'], 	function(item, search) {
+define(['item', 'search', 'city'], 	function(item, search, city) {
 
 
-API.item.getDataCart = 
-	function(ctxId, param){
+API.cart.getDataCart = 
+	function( param){
 		item.getDataCart(param, function(data){
-			console.log("MAGIC{ctxId:\'"+ctxId+"\', \"data\":"+JSON.stringify(data)+"}");
+			console.log("MAGIC{ method:'getDataCart', data:"+JSON.stringify(data)+"}");
 		});
 	};
 	
-API.item.getDataSearchSugg = 
-	function(ctxId, param){
-			search.getDataSearchSugg(param, function(data){
-				console.log("MAGIC{ctxId:'"+ctxId+"', data:"+JSON.stringify(data)+"}");
-			});				
-	};
 
-API.item.getDataSearch = 
-	function(ctxId, param){
+
+API.search.getDataSearch = 
+function(param){
 			search.getDataSearch(param, function(data){
-				console.log("MAGIC{ctxId:'"+ctxId+"', method:'getDataSearch', data:"+JSON.stringify(data)+"}");
+				API.search.getOtherData(data);
+				console.log("MAGIC{ method:'getDataSearch', data:"+JSON.stringify(data)+"}");
+			});				
+	}
+	
+API.search.getOtherData = 
+	function( param){
+			search.getOtherData(param, function(data){
+				
+				console.log("MAGIC{ method:'getOtherData', data:"+JSON.stringify(data)+"}");
 			});				
 	};
-
+	
+API.city.getDataSuggCity =
+function(param){
+		city.getSugg(param,	function(data){
+			console.log("MAGIC{ method:'getDataSuggCity', data:"+JSON.stringify(data)+"}");
+		});
+	}	
+API.city.setCity = 
+	function(param){
+		city.setCity(param);
+	}
+	
+console.log("MAIN{method:'jsIsLoaded'}");
+city.checkCity();
 //API.item = Object.assign(item, search);
-API.item.getDataCart("ffg", {query: "иван"});
+//API.item.getDataCart("ffg", {query: "иван"});
 });
 
 //API.search.get('вор', {page:0,});

@@ -19,9 +19,9 @@ import ru.chitaigorod.android.R;
 	 * Created by f22labs on 07/03/17.
 	 */
 
-	public class BaseFragment extends Fragment {
+	public abstract class BaseFragment extends Fragment {
 
-	protected FloatingSearchView mSearchView;
+	
 		FragmentNavigation mFragmentNavigation;
 
 		@Override
@@ -41,31 +41,31 @@ import ru.chitaigorod.android.R;
 
 		public interface FragmentNavigation {
 			void pushFragment(Fragment fragment);
+			void showDialog(DialogFragment frg);
 			void get(String str);
+			void setCartBadge(int count);
 		}
 
-		public  void APIResponse(JSONObject json){
+		
+		public void APIResponse(JSONObject json){
+			try
+			{
+				if (json.getString("method").equals("getDataCart"))
+				{
+					JSONArray data = json.getJSONObject("data").getJSONObject("results").getJSONArray("basket");
+					mFragmentNavigation.setCartBadge(data.length());
+				}
+			}
+			catch (JSONException e)
+			{}
+		}
 
-		};
+		
 
 		@Override
 		public void onViewCreated(View view, Bundle savedInstanceState)
 		{
 			super.onViewCreated(view, savedInstanceState);
-
-			ShopAppBar sab = (ShopAppBar)view.findViewById(R.id.my_search_view);
-			if (sab != null){
-				mSearchView = sab.getSearchView();
-
-				View cartBtn = sab.getCartButton();
-				cartBtn.setOnClickListener( new OnClickListener(){
-						@Override
-						public void onClick(View p1)
-						{
-							//((MainActivity)getActivity()).onCartSelected();
-						}	
-					});
-			}
 		}
 
 

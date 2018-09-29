@@ -14,9 +14,9 @@
     <color name="textPrimary">#212121</color>
     <color name="textSecondary">#727272</color>
 
-    <color name="colorAccentLight">#F8BBD0</color>
-    <color name="colorAccent">#ee1f65</color>
-    <color name="colorAccentDark">#c2185b</color>
+    <color name="colorAccentLight">#9CCEE6</color>
+    <color name="colorAccent">#26a9e0</color>
+    <color name="colorAccentDark">#18698F</color>
 
     <color name="facebook_bg">#3b5998</color>
     <color name="facebook_bg_pressed">#2a406e</color>

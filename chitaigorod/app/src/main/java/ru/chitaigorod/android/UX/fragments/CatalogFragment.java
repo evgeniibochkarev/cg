@@ -9,6 +9,13 @@ import java.util.*;
 public class CatalogFragment extends BaseFragment
 {
 
+	@Override
+	public void APIResponse(JSONObject json)
+	{
+		// TODO: Implement this method
+	}
+
+
 	public static String TAG = "CatalogFragment";
 	public static CatalogFragment newInstance(){
 		CatalogFragment frag = new CatalogFragment();

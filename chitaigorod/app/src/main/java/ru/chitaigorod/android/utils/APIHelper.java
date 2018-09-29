@@ -5,16 +5,16 @@ import org.json.*;
 
 public class APIHelper
 {
-	public static String getData(int ctxId, String method,JSONObject param){
+	public static String getData(String method,JSONObject param){
 		String data = "";
-		/*for(Map.Entry<String, String> e : param.entrySet()) {
+		/*)for(Map.Entry<String, String> e : param.entrySet()) {
 			String key = e.getKey();
 			String value = e.getValue();
 
 			data = data + key + ":'"+value+"',";
 		}*/
 		
-		return "javascript:API.item."+method+"('"+ctxId+"', "+param.toString()+");";
+		return "javascript:API."+method+"( "+param.toString()+");";
 	}
 }
 

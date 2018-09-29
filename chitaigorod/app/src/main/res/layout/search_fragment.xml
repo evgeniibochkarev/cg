@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<RelativeLayout
-    android:id="@+id/category_root"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
-
+	<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:app="http://schemas.android.com/apk/res-auto"
+		xmlns:tools="http://schemas.android.com/tools"
+		android:id="@+id/parent_view"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:fitsSystemWindows="true"
+		tools:context=".MainActivity">
+		
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/category_coordinator"
         android:layout_width="fill_parent"
@@ -15,25 +16,26 @@
         <android.support.design.widget.AppBarLayout
             android:id="@+id/category_appbar_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="66dp"
             android:background="@color/cg_blue"
             android:fitsSystemWindows="true"
             app:elevation="0dp">
-			<ru.chitaigorod.android.UX.custom_view.ShopAppBar 
+			<com.arlib.floatingsearchview.FloatingSearchView 
 				android:id="@+id/my_search_view"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
-				app:showCart="true"
-				app:floatingSearch_dismissOnOutsideTouch="false"
-				app:floatingSearch_leftActionMode="showHome"
-				app:floatingSearch_searchBarMarginLeft="@dimen/search_view_inset"         
+				app:floatingSearch_close_search_on_keyboard_dismiss="false"
+				app:floatingSearch_dimBackground="false"
+				app:floatingSearch_dismissOnOutsideTouch="true"
+				app:floatingSearch_leftActionMode="showSearch"
+				app:floatingSearch_menu="@menu/menu_search_filter"
+				app:floatingSearch_searchBarMarginLeft="@dimen/search_view_inset"
+				app:floatingSearch_searchBarMarginRight="@dimen/search_view_inset"
 				app:floatingSearch_searchBarMarginTop="@dimen/search_view_inset"
 				app:floatingSearch_searchHint="Поиск..."
 				app:floatingSearch_showSearchKey="true"
-				app:floatingSearch_suggestionsListAnimDuration="250"
-				app:floatingSearch_dimBackground="false"
-				app:floatingSearch_close_search_on_keyboard_dismiss="false"/>
-			/>
+				app:floatingSearch_suggestionsListAnimDuration="250"/>		
+				
         </android.support.design.widget.AppBarLayout>
 
         <android.support.v7.widget.RecyclerView

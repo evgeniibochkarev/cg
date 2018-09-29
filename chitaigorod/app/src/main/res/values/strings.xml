@@ -13,7 +13,7 @@
     <string name="Ok">OK</string>
     <string name="Cancel">Cancel</string>
     <string name="Close">Close</string>
-    <string name="Clear">Clear</string>
+    <string name="Clear">Сбросить</string>
     <string name="Undo">Undo</string>
     <string name="Required_field">Required field</string>
     <string name="The_entries_must_match">The entries must match</string>
@@ -37,8 +37,8 @@
     <string name="Just_arrived">Just arrived</string>
     <string name="No_banners">No banners</string>
     <string name="Show_offers">Show offers</string>
-    <string name="FILTER">FILTER</string>
-    <string name="Apply">Apply</string>
+    <string name="FILTER">Фильтр</string>
+    <string name="Apply">Применить</string>
     <string name="Restart">Restart</string>
     <string name="Filter_unavailable">Filter is unavailable</string>
     <string name="Products_not_found">Products not found.</string>
@@ -199,4 +199,16 @@
     <string name="content_description_intro_screen">Intro screen</string>
     <string name="content_description_product_image">Product image</string>
     <string name="content_description_shipping_info">Shipping info</string>
+	
+	<string-array name="category_array">
+        <item>Mercury</item>
+        <item>Venus</item>
+        <item>Earth</item>
+        <item>Mars</item>
+        <item>Jupiter</item>
+        <item>Saturn</item>
+        <item>Uranus</item>
+        <item>Neptune</item>
+    </string-array>
 </resources>
+

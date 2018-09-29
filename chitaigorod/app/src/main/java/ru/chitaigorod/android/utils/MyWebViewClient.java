@@ -131,7 +131,10 @@ public class MyWebViewClient extends WebViewClient
 		if(uri.getPath().contains("main.js")){
 			return "api/scripts/"+ uri.getPathSegments().get(uri.getPathSegments().size() - 1);
 		}	
-		if(uri.getPath().contains("api.js")){
+		if(uri.getPath().contains("city.js")){
+			return "api/scripts/"+ uri.getPathSegments().get(uri.getPathSegments().size() - 1);
+		}
+		if(uri.getPath().contains("jquery.cookie.js")){
 			return "api/scripts/"+ uri.getPathSegments().get(uri.getPathSegments().size() - 1);
 		}
 		if(uri.getPath().contains("elasticsearch.min.js")){

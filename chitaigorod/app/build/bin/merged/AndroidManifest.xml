@@ -33,6 +33,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:name="com.squareup.picasso.PicassoProvider"
+            android:authorities="ru.chitaigorod.android.com.squareup.picasso"
+            android:exported="false" />
     </application>
 
 </manifest>

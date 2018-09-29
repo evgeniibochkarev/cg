@@ -3,27 +3,27 @@
     
     <tab
         id="@+id/tab_main_page"
-        icon="@drawable/ic_favorites"
+        icon="@drawable/ic_book_white_24dp"
         title="Магазин"
         barColorWhenSelected="#fff" />
     <tab
-        id="@+id/tab_discount"
-        icon="@drawable/ic_nearby"
-        title="Акции"
+        id="@+id/tab_cart"
+        icon="@drawable/ic_shopping_cart_white_24dp"
+        title="Корзина"
         barColorWhenSelected="#fff" />
     <tab
-        id="@+id/tab_catalog"
-        icon="@drawable/ic_friends"
-        title="Каталог"
+        id="@+id/tab_search"
+        icon="@drawable/ic_search_white_24dp"
+        title="Поиск"
         barColorWhenSelected="#fff" />
     <tab
         id="@+id/tab_cabinet"
-        icon="@drawable/ic_friends"
+        icon="@drawable/ic_account_circle_white_24dp"
         title="Кабинет"
         barColorWhenSelected="#fff" />
 	<tab
         id="@+id/tab_info"
-        icon="@drawable/ic_restaurants"
+        icon="@drawable/ic_info_white_24dp"
         title="Инфо"
         barColorWhenSelected="#fff" />
 </tabs>
