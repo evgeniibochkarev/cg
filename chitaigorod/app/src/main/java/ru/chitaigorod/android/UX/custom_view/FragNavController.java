@@ -469,6 +469,8 @@ public class FragNavController {
                 fragmentManager = mFragmentManager;
             }
 
+			
+			/*
             //Clear any current dialog fragments
             if (fragmentManager.getFragments() != null) {
                 for (Fragment fragment : fragmentManager.getFragments()) {
@@ -477,7 +479,7 @@ public class FragNavController {
                         mCurrentDialogFrag = null;
                     }
                 }
-            }
+            }*/
 
             mCurrentDialogFrag = dialogFragment;
             try {

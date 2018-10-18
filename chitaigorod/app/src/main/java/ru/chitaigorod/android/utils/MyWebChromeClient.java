@@ -1,14 +1,12 @@
 package ru.chitaigorod.android.utils;
+
+
+import android.view.*;
 import android.webkit.*;
 import org.json.*;
-import android.support.v4.app.*;
-import java.util.*;
-
 import ru.chitaigorod.android.*;
-import ru.chitaigorod.android.UX.fragments.*;
-import ru.chitaigorod.android.interfaces.*;
 import ru.chitaigorod.android.UX.dialogs.*;
-import android.view.*;
+import ru.chitaigorod.android.UX.fragments.*;
 
 public class MyWebChromeClient extends WebChromeClient 
 {
@@ -55,6 +53,12 @@ public class MyWebChromeClient extends WebChromeClient
 			try
 			{
 				JSONObject resp = new JSONObject(msg);
+				
+				String method = resp.getString("method");
+				if(method.equals("getDataCart")){
+					int count = resp.getJSONObject("data").getJSONArray("basket").length();
+					ma.setCartBadge(count);
+				}
 				//int _ctxId = resp.getInt("ctxId");
 
 				/*

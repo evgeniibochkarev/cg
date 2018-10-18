@@ -1,8 +1,8 @@
 package ru.chitaigorod.android.entities;
+
 import java.util.*;
 import org.json.*;
 import ru.chitaigorod.android.utils.*;
-import kotlin.internal.contracts.*;
 
 public class Item_book
 {
@@ -41,7 +41,7 @@ public class Item_book
 	private String school_class;
 	
 	private HashMap<String, Object> data;
-	private JSONObject otherProp;
+	private JSONObject otherProp = null;
 	
 	public Item_book(HashMap _data){
 		data = new HashMap<String, Object>();
@@ -80,6 +80,13 @@ public class Item_book
 	}
 	public String getAuthor(){
 		return  data.get("author").toString();
+	}
+	public String getBID(){
+		return data.get("bid").toString();
+	}
+	
+	public String geIblSecId(){
+		return data.get("ibl_sec_id").toString();
 	}
 	
 	public String getIblId(){

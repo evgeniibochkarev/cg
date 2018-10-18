@@ -16,6 +16,7 @@ import ru.chitaigorod.android.utils.*;
 import ru.chitaigorod.android.interfaces.*;
 import ru.chitaigorod.android.UX.dialogs.*;
 import android.support.v4.app.*;
+import android.graphics.*;
 
 public class SearchFragment extends BaseFragment
 {	
@@ -37,7 +38,7 @@ public class SearchFragment extends BaseFragment
 	public static SearchFragment newInstance(){
 		Bundle bundle = new Bundle();
 		bundle.putString("query", "");
-		bundle.putSerializable("elastic_filter", (new EntryElasticSearchFilter()).getHashMap());
+		//bundle.putSerializable("elastic_filter", (new EntryElasticSearchFilter()).getHashMap());
 		bundle.putSerializable("recycler_filter", (new EntryRecyclerSearchFilter()).getHashMap());
 		
 		SearchFragment frg = new SearchFragment();
@@ -48,7 +49,7 @@ public class SearchFragment extends BaseFragment
 	public static SearchFragment newInstance(String query, EntryRecyclerSearchFilter rFilter, EntryElasticSearchFilter eFilter){
 		Bundle bundle = new Bundle();
 		bundle.putString("query", query);
-		bundle.putSerializable("elastic_filter", eFilter.getHashMap());
+		//bundle.putSerializable("elastic_filter", eFilter.getHashMap());
 		bundle.putSerializable("recycler_filter", rFilter.getHashMap());
 		SearchFragment frg = new SearchFragment();
 		frg.setArguments(bundle);
@@ -66,11 +67,11 @@ public class SearchFragment extends BaseFragment
 			Bundle bundle = getArguments();
 			page = 0;
 			query = bundle.getString("query");
-			elasticFilter = new EntryElasticSearchFilter((HashMap)bundle.getSerializable("elastic_filter"));
+			elasticFilter = new EntryElasticSearchFilter();//new EntryElasticSearchFilter((HashMap)bundle.getSerializable("elastic_filter"));
 			recyclerFilter = new EntryRecyclerSearchFilter((HashMap)bundle.getSerializable("recycler_filter"));
 		}else{
 			query = savedInstanceState.getString("query");
-			elasticFilter = new EntryElasticSearchFilter( (HashMap)savedInstanceState.getSerializable("elastic_filter"));
+			elasticFilter = new EntryElasticSearchFilter();//new EntryElasticSearchFilter( (HashMap)savedInstanceState.getSerializable("elastic_filter"));
 			recyclerFilter = new EntryRecyclerSearchFilter((HashMap)savedInstanceState.getSerializable("recycler_filter"));
 			page = savedInstanceState.getInt("page", 0);
 		}
@@ -91,6 +92,9 @@ public class SearchFragment extends BaseFragment
         productsRecycler.setItemAnimator(new DefaultItemAnimator());
        // productsRecycler.setHasFixedSize(true);
         
+	   
+	   
+	   
         productsRecyclerLayoutManager = new GridLayoutManager(getActivity(), 2);
         productsRecycler.setLayoutManager(productsRecyclerLayoutManager);
         endlessRecyclerScrollListener = new EndlessRecyclerScrollListener(productsRecyclerLayoutManager) {
@@ -123,6 +127,7 @@ public class SearchFragment extends BaseFragment
 	}
 	
 	private void setupSearchView(){
+		mSearchView.setMenuItemIconColor(Color.parseColor("#FC6621"));
 		mSearchView.setSearchText(query);
 		mSearchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
 
@@ -150,7 +155,7 @@ public class SearchFragment extends BaseFragment
 				@Override
 				public void onActionMenuItemSelected(MenuItem item) {
 					if (item.getItemId() == R.id.action_search_filter) {
-						mFragmentNavigation.showDialog(FilterDialogFragment.newInstance(recyclerFilter,elasticFilter, new FilterDialogInterface(){
+						mFragmentNavigation.showDialog(FilterDialogFragment.newInstance(query,recyclerFilter,elasticFilter, new FilterDialogInterface(){
 															   @Override
 															   public void onFilterChanged(EntryRecyclerSearchFilter rFilter, EntryElasticSearchFilter eFilter)
 															   {
@@ -159,7 +164,8 @@ public class SearchFragment extends BaseFragment
 																   page = 0;
 																   endlessRecyclerScrollListener.clean();
 																   productsRecyclerAdapter.clear();
-																  
+																   
+																   
 																   onGoSearch();														   }						
 						}));
 					}
@@ -171,6 +177,7 @@ public class SearchFragment extends BaseFragment
 	
 	private void onGoSearch(){
 		mSearchView.showProgress();
+		
 		((MainActivity) getActivity()).get(APIHelper.getData("cart.getDataCart", new JSONObject()));
 		JSONObject param = new JSONObject();
 		try
@@ -179,13 +186,17 @@ public class SearchFragment extends BaseFragment
 			param.put("page", page);
 		
 			JSONObject jsonObject = new JSONObject();
-			
+			/*
 			HashMap it = elasticFilter.getHashMap();
+			
 			for(Map.Entry entry : it.entrySet()) {
 				String key =(String) entry.getKey();
 				String value =(String) entry.getValue();
 				jsonObject.put(key, value);
-			}
+			}*/
+			jsonObject.put("author", elasticFilter.getAuthor());
+			if( elasticFilter.getCategory() != null) jsonObject.put("category", elasticFilter.getCategory().getId());
+	
 			param.putOpt("filter", jsonObject);
 			
 			((MainActivity) getActivity()).get(APIHelper.getData("search.getDataSearch", param));
@@ -201,6 +212,7 @@ public class SearchFragment extends BaseFragment
 	@Override
 	public void APIResponse(JSONObject json)
 	{
+		
 		super.APIResponse(json);
 		try
 		{
@@ -242,7 +254,7 @@ public class SearchFragment extends BaseFragment
 	@Override
 	public void onSaveInstanceState(Bundle outState)
 	{
-		outState.putSerializable("elastic_filter", elasticFilter.getHashMap());
+		//outState.putSerializable("elastic_filter", elasticFilter.getHashMap());
 		outState.putSerializable("recycler_filter", recyclerFilter.getHashMap());
 		outState.putInt("page", this.page);
 		outState.putString("query", this.query);
@@ -256,10 +268,7 @@ public class SearchFragment extends BaseFragment
         productsRecyclerAdapter = new ProductsRecyclerAdapter(getActivity(), new CategoryRecyclerInterface() {
 				@Override
 				public void onProductSelected(View caller, Item_book product) {
-					if (android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
-						//setReenterTransition(TransitionInflater.from(getActivity()).inflateTransition(android.R.transition.fade));
-					}
-					//((MainActivity) getActivity()).onProductSelected(product.getId());
+					mFragmentNavigation.pushFragment(ItemViewerFragment.newInstance(product));
 				}
 			});
     }

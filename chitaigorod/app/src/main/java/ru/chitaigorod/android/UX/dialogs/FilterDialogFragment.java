@@ -16,6 +16,8 @@ import android.support.v4.app.DialogFragment;
 import ru.chitaigorod.android.UX.adapters.*;
 import android.support.v7.widget.*;
 import android.widget.CompoundButton.*;
+import android.text.*;
+import android.view.animation.*;
 
 public class FilterDialogFragment extends BaseDialogFragment 
 {
@@ -30,15 +32,16 @@ public class FilterDialogFragment extends BaseDialogFragment
     private EntryElasticSearchFilter elasticFilterData;
 	private EntryRecyclerSearchFilter recyclerFilterData;
     private FilterDialogInterface filterDialogInterface;
+	private String query;
 	
-	
-	public static FilterDialogFragment newInstance(EntryRecyclerSearchFilter recyclerFilter,EntryElasticSearchFilter elasticFilter, FilterDialogInterface filterDialogInterface) {
+	public static FilterDialogFragment newInstance(String query, EntryRecyclerSearchFilter recyclerFilter,EntryElasticSearchFilter elasticFilter, FilterDialogInterface filterDialogInterface) {
         FilterDialogFragment filterDialogFragment = new FilterDialogFragment();
 
         if (elasticFilter == null || filterDialogInterface == null) {
            // Timber.e(new RuntimeException(), "Created filterDialog with null parameters.");
             return null;
         }
+		filterDialogFragment.query = query;
         filterDialogFragment.elasticFilterData = elasticFilter;
         filterDialogFragment.recyclerFilterData = recyclerFilter;
 		filterDialogFragment.filterDialogInterface = filterDialogInterface;
@@ -60,7 +63,8 @@ public class FilterDialogFragment extends BaseDialogFragment
             int height = ViewGroup.LayoutParams.MATCH_PARENT;
             Window window = d.getWindow();
             window.setLayout(width, height);
-            window.setWindowAnimations(R.style.alertDialogAnimation);
+			//window.setGravity(Gravity.RIGHT);
+           // window.setWindowAnimations(R.style.alertDialogAnimation);
         }
     }
 
@@ -69,6 +73,54 @@ public class FilterDialogFragment extends BaseDialogFragment
         //Timber.d("%s - OnCreateView", this.getClass().getSimpleName());
         View view = inflater.inflate(R.layout.dialog_filter, container, false);
 		
+		//category
+		RelativeLayout categoryRL = (RelativeLayout) view.findViewById(R.id.dialog_fragment_category_rl);
+		final TextView categoryText = (TextView) view.findViewById(R.id.dialog_fragment_category_name);
+		if(elasticFilterData.getCategory() != null){
+			categoryText.setText(elasticFilterData.getCategory().getName());
+		}
+		categoryRL.setOnClickListener(new OnClickListener(){
+				@Override
+				public void onClick(View p1)
+				{
+					mFragmentNavigation.showDialog(CategoryPickerDialogFragment.newInstance(query, new CategoryPickerDialogInterface(){
+														   @Override
+														   public void onSelect(EntryCategory eCat)
+														   {
+															   categoryText.setText(eCat.getName());
+															   elasticFilterData.setCategory(eCat);
+															   filterDialogInterface.onFilterChanged(recyclerFilterData, elasticFilterData);
+															   
+														   }
+														   												   												   				
+													   }));
+				}
+			});
+		
+		// Author
+		RelativeLayout authorRL = (RelativeLayout) view.findViewById(R.id.dialog_fragment_author_rl);
+		final TextView authorText = (TextView) view.findViewById(R.id.dialog_fragment_author_name);
+		if(!elasticFilterData.getAuthor().equals("not_set")){
+			authorText.setText(elasticFilterData.getAuthor());
+		}
+		authorRL.setOnClickListener(new OnClickListener(){
+				@Override
+				public void onClick(View p1)
+				{
+					mFragmentNavigation.showDialog(AuthorPickerDialogFragment.newInstance(query, new AuthorPickerDialogInterface(){
+														   @Override
+														   public void onAuthorChanged(String author)
+														   {
+															   if(!author.equals("not_set"))   authorText.setText(author);
+															   else authorText.setText("Все");
+															   elasticFilterData.setAuthor(author);
+															   filterDialogInterface.onFilterChanged(recyclerFilterData, elasticFilterData);
+															    // mFragmentNavigation.showDialog(FilterDialogFragment.newInstance(query, recyclerFilterData, elasticFilterData, filterDialogInterface));
+														   }												   				
+					}));
+				}
+		});
+		
 		SwitchCompat inStock = (SwitchCompat) view.findViewById(R.id.dialog_fragment_switch_compat_in_stock);
 		inStock.setChecked(recyclerFilterData.getAvailable());
 		inStock.setOnCheckedChangeListener(new OnCheckedChangeListener(){
@@ -76,15 +128,63 @@ public class FilterDialogFragment extends BaseDialogFragment
 				public void onCheckedChanged(CompoundButton p1, boolean p2)
 				{
 					recyclerFilterData.setAvailable(p2);
+					filterDialogInterface.onFilterChanged(recyclerFilterData, elasticFilterData);
 				}
 		});
+		
+		EditText maxPrice = (EditText) view.findViewById(R.id.dialog_fragment_price_max);
+		if(recyclerFilterData.getMaxPrice() > 0.01) maxPrice.setText(recyclerFilterData.getMaxPrice().toString());
+		maxPrice.addTextChangedListener(new TextWatcher(){
+				@Override
+				public void beforeTextChanged(CharSequence p1, int p2, int p3, int p4){}
+				@Override
+				public void onTextChanged(CharSequence p1, int p2, int p3, int p4)
+				{
+					if(p1.length() != 0){
+						recyclerFilterData.setMaxPrice(Double.parseDouble(p1.toString()));
+						
+					}else{
+						recyclerFilterData.setMaxPrice(0.0);	
+						//filterDialogInterface.onFilterChanged(recyclerFilterData, elasticFilterData);
+					}
+					filterDialogInterface.onFilterChanged(recyclerFilterData, elasticFilterData);	
+				}
+				@Override
+				public void afterTextChanged(Editable p1)
+				{					
+				}				
+		});
+		
+		EditText minPrice = (EditText) view.findViewById(R.id.dialog_fragment_price_min);
+		if(recyclerFilterData.getMinPrice() > 0.01) minPrice.setText(recyclerFilterData.getMinPrice().toString());
+		minPrice.addTextChangedListener(new TextWatcher(){
+				@Override
+				public void beforeTextChanged(CharSequence p1, int p2, int p3, int p4){}
+				@Override
+				public void onTextChanged(CharSequence p1, int p2, int p3, int p4)
+				{
+					if(p1.length() != 0){
+						recyclerFilterData.setMinPrice(Double.parseDouble(p1.toString()));
+					}else{
+						recyclerFilterData.setMinPrice(0.0);
+							//filterDialogInterface.onFilterChanged(recyclerFilterData, elasticFilterData);
+						}
+					filterDialogInterface.onFilterChanged(recyclerFilterData, elasticFilterData);	
+				}
+				@Override
+				public void afterTextChanged(Editable p1)
+				{					
+				}				
+			});
+		
+		
 		Button btnApply = (Button)view.findViewById(R.id.filter_btn_apply);
         btnApply.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					//String filterUrl = buildFilterUrl();
 					//filterDialogInterface.onFilterSelected(filterUrl);
-					filterDialogInterface.onFilterChanged(recyclerFilterData, elasticFilterData);
+					 //filterDialogInterface.onFilterChanged(recyclerFilterData, elasticFilterData);
 					dismiss();
 				}
 			});
@@ -143,7 +243,11 @@ public class FilterDialogFragment extends BaseDialogFragment
 			});*/
         return view;
     }
+
+	
+	
 }
+
 
 /*
 import bf.io.openshop.R;

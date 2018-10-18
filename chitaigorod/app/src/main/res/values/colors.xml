@@ -27,6 +27,8 @@
     <color name="semi_light_transparent">#5a000000</color>
     <color name="semi_lighter_transparent">#2d000000</color>
 
+	
+	
     <color name="background_grey">#f2f2f2</color>
     <color name="line_lighter_grey">#dedede</color>
     <color name="line_light_grey">#d7a7a7a7</color>
@@ -36,5 +38,7 @@
 
     <color name="white">#FFFFFF</color>
 	
+	<color name="cg_button_green">#D757EF53</color>
+	<color name="cg_button_green_dark">#D71D611D</color>
 	<color name="cg_blue">#26a9e0</color>
 </resources>

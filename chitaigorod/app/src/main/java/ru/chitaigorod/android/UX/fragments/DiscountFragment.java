@@ -1,8 +1,10 @@
 package ru.chitaigorod.android.UX.fragments;
+
+
 import android.os.*;
 import android.view.*;
-import ru.chitaigorod.android.*;
 import org.json.*;
+import ru.chitaigorod.android.*;
 
 public class DiscountFragment extends BaseFragment
 {

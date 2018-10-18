@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout 
+<LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
@@ -7,70 +7,150 @@
 	android:orientation="vertical"
 	android:padding="@dimen/base_margin">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        android:text="@string/FILTER"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-	
-		<android.support.v7.widget.SwitchCompat
-			android:id="@+id/dialog_fragment_switch_compat_in_stock"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_centerHorizontal="true"
-			android:layout_centerVertical="true"
-			android:layout_marginLeft="50dp"
-			android:checked="true"
-			android:text="Наличие"
-			/>
-		
-	
-	<LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
-		
+	<TextView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="15dp"
+		android:text="@string/FILTER"
+		android:textSize="20sp"
+		android:textStyle="bold"/>
+
+	<android.support.v7.widget.SwitchCompat
+		android:id="@+id/dialog_fragment_switch_compat_in_stock"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_centerHorizontal="true"
+		android:layout_centerVertical="true"
+		android:layout_margin="@dimen/search_view_inset"
+		android:checked="true"
+		android:text="Наличие"/>
+
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/dialog_fragment_author_rl"
+		android:layout_margin="@dimen/search_view_inset">
+
 		<TextView
-			android:layout_width="match_parent"
+			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-				android:id="@+id/dialog_frg_cat_id"
-				
-						
-				android:text="Категория"
-				android:textSize="12sp" />
-			 
+			android:text="Автор"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/dialog_fragment_author_name"
+			android:text="Все"
+			android:layout_marginRight="@dimen/search_view_inset"
+			android:layout_alignParentRight="true"
+			android:textColor="@color/textSecondary"/>
+
+	</RelativeLayout>
+
+	<LinearLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_margin="@dimen/search_view_inset"
+		android:orientation="horizontal">
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_weight="0"
+			android:text="Цена"/>
+
+		<EditText
+			style="@style/Widget.AppCompat.EditText"
+			android:textColor="@color/textPrimary"
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:inputType="number"
+			android:layout_weight="1"
+			android:maxLines="1"
+			android:ellipsize="start"
+			android:gravity="center_horizontal"
+			android:id="@+id/dialog_fragment_price_min"
+			android:hint="min"
+			android:maxLength="6"
+			android:singleLine="true"
+			android:ems="10"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_weight="0"
+			android:text=" - "
+			android:textSize="12sp"/>
+
+		<EditText
+			style="@style/Widget.AppCompat.EditText"
+			android:textColor="@color/textPrimary"
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:inputType="number"
+			android:layout_weight="1"
+			android:maxLines="1"
+			android:gravity="center_horizontal"
+			android:id="@+id/dialog_fragment_price_max"
+			android:hint="max"
+			android:ellipsize="start"
+			android:maxLength="6"
+			android:singleLine="true"
+			android:ems="10"/>
+
 	</LinearLayout>
-	
-    <LinearLayout
-        android:id="@+id/llButtons"
-        style="?android:attr/buttonBarStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/filter_btn_cancel"
-            style="@style/buttonSecondaryStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:text="@string/Clear"/>
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/dialog_fragment_category_rl"
+		android:layout_margin="@dimen/search_view_inset">
 
-        <View
-            android:layout_width="@dimen/base_margin_horizontal"
-            android:layout_height="5dp"/>
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Категория"/>
 
-        <Button
-            android:id="@+id/filter_btn_apply"
-            style="@style/buttonPrimaryStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:text="@string/Apply"/>
-    </LinearLayout>
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/dialog_fragment_category_name"
+			android:text="Все"
+			android:layout_marginRight="@dimen/search_view_inset"
+			android:layout_alignParentRight="true"
+			android:textColor="@color/textSecondary"/>
+
+	</RelativeLayout>
+
+	<LinearLayout
+		android:id="@+id/llButtons"
+		style="?android:attr/buttonBarStyle"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:gravity="center"
+		android:orientation="horizontal">
+
+		<Button
+			android:id="@+id/filter_btn_cancel"
+			style="@style/buttonSecondaryStyle"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="0.5"
+			android:text="@string/Clear"/>
+
+		<View
+			android:layout_width="@dimen/base_margin_horizontal"
+			android:layout_height="5dp"/>
+
+		<Button
+			android:id="@+id/filter_btn_apply"
+			style="@style/buttonPrimaryStyle"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="0.5"
+			android:text="@string/Apply"/>
+
+	</LinearLayout>
+
 </LinearLayout>
 

@@ -3,34 +3,41 @@ import java.util.*;
 
 public class EntryElasticSearchFilter
 {
-	private HashMap<String, String> obj;
+	private EntryCategory mCategory;
+	private String mAuthor;
+	
+	
+	//private HashMap<String, Object> obj;
 	
 	public EntryElasticSearchFilter(){
-		obj = new HashMap<String, String>();
+		/*obj = new HashMap<String, Object>();
 		obj.put("author","not_set");
 		obj.put("seria","not_set");
-		obj.put("category","not_set");
-		obj.put("year","not_set");
+		obj.put("category", null);
+		obj.put("year","not_set");*/
+		mCategory = null;
+		mAuthor = "not_set";
 	}
 	
-	public EntryElasticSearchFilter(HashMap hm){
-		obj = new HashMap<String, String>();
-		obj.putAll(hm);
+	public EntryElasticSearchFilter(EntryCategory ec, String author){
+		//obj = new HashMap<String, Object>();
+		//obj.putAll(hm);.
+		mCategory = ec;
+		mAuthor = author;
 	}
 	
 	public void setAuthor(String str){
-		obj.put("author",str);
+		mAuthor = str;
 	}
-	public void setSeria(String str){
-		obj.put("seria",str);
+	public String getAuthor(){
+		return mAuthor;
 	}
-	public void setCategory(String str){
-		obj.put("category",str);
+	
+	public EntryCategory getCategory(){
+		return mCategory ;
 	}
-	public void setYear(String str){
-		obj.put("year",str);
+	public void setCategory(EntryCategory ec){
+		mCategory = ec;
 	}
-	public HashMap getHashMap(){
-		return obj;
-	}
+	
 }

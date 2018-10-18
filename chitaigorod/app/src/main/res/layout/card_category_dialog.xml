@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/card_category_dialog_ll"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical">
+
+	<android.support.v7.widget.CardView
+		xmlns:card_view="http://schemas.android.com/apk/res-auto"
+		android:id="@+id/card_category_dialog_view"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		card_view:cardBackgroundColor="@android:color/white"
+		card_view:cardElevation="2dp"
+		card_view:cardUseCompatPadding="true">
+
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:padding="3dp">
+
+			<TextView
+				android:id="@+id/card_category_dialog_main_cat"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:textColor="@color/textPrimary"	
+				android:gravity="left"	
+				android:textSize="20sp"
+				android:textStyle="bold"/>
+			
+			<RadioButton
+				android:id="@+id/card_category_dialog_sub_cat"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_below="@+id/card_category_dialog_main_cat"
+				android:layout_marginLeft="22dp"
+				android:gravity="left"/>
+				
+	
+
+		</RelativeLayout>
+
+	</android.support.v7.widget.CardView>
+
+</LinearLayout>
+

@@ -1,11 +1,14 @@
 package ru.chitaigorod.android.UX.dialogs;
 
+
+import android.app.*;
 import android.content.*;
 import android.os.*;
-import android.support.annotation.*;
 import android.support.v4.app.*;
-import com.arlib.floatingsearchview.*;
 import org.json.*;
+
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 
 public abstract class BaseDialogFragment extends DialogFragment
  {
@@ -30,5 +33,5 @@ public abstract class BaseDialogFragment extends DialogFragment
 	}
 
 	public abstract void APIResponse(JSONObject json);
-
+	
 	}

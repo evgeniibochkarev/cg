@@ -106,6 +106,15 @@ public class ProductsRecyclerAdapter extends RecyclerView.Adapter<ProductsRecycl
 					return false;
 				}
 			}
+			if(rF.getMinPrice() > 0.01)
+				if( rF.getMinPrice() >= item.getOtherProp().getDouble("price") )
+					return false;
+				
+			if(rF.getMaxPrice() > 0.01)
+				if( rF.getMaxPrice() <= item.getOtherProp().getDouble("price"))
+					return false;
+			
+			
 		}
 		catch (JSONException e)
 		{}
@@ -170,7 +179,7 @@ public class ProductsRecyclerAdapter extends RecyclerView.Adapter<ProductsRecycl
 					holder.productOldPrice.setPaintFlags(holder.productOldPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 					
 					Double q = Double.valueOf( holder.product.getOtherProp().getString("price")) * 100.00 / Double.valueOf( holder.product.getOtherProp().getString("old_price") );     
-					holder.productDiscount.setText("Вы экономите: " +(100- q.intValue()) +"%");
+					holder.productDiscount.setText("Вы экономите: " +(int)(100-  q) +"%");
 				}
 				 
 				 if(status.equals("SOON")){
@@ -257,12 +266,14 @@ public class ProductsRecyclerAdapter extends RecyclerView.Adapter<ProductsRecycl
            /* productPriceTV = v.findViewById(R.id.product_item_price);
             productPriceDiscountTV = v.findViewById(R.id.product_item_discount);
             productImage = v.findViewById(R.id.product_item_image);
-            v.setOnClickListener(new View.OnClickListener() {
+           */
+			v.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						categoryRecyclerInterface.onProductSelected(v, product);
+						if(product.getOtherProp() != null)
+							categoryRecyclerInterface.onProductSelected(v, product);
 					}
-				});*/
+				});
         }
 
         public void bindContent(Item_book product) {

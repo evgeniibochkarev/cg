@@ -40,7 +40,7 @@ public class MyWebViewClient extends WebViewClient
 
 		if (file != null){
 			try {				
-				File fil = new File("/storage/emulated/0/apps/cg/chitaigorod/app/src/main/assets/"+file);
+				File fil = new File("/storage/emulated/0/cg/chitaigorod/app/src/main/assets/"+file);
 				FileInputStream stream = new FileInputStream(fil);
 				String tContents = "";
 
@@ -86,7 +86,7 @@ public class MyWebViewClient extends WebViewClient
 
 		if (file != null){
 			try {				
-				File fil = new File("/storage/emulated/0/apps/cg/chitaigorod/app/src/main/assets/"+file);
+				File fil = new File("/storage/emulated/0/cg/chitaigorod/app/src/main/assets/"+file);
 				FileInputStream stream = new FileInputStream(fil);
 				String tContents = "";
 
