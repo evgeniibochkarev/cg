@@ -26,6 +26,7 @@ public class MyWebChromeClient extends WebChromeClient
 			String dd = cmsg.message();
 		}
 		
+		
 		if (cmsg.message().startsWith("MAIN"))
 		{
 			String msg = cmsg.message().substring(4); // strip off prefix
@@ -38,10 +39,10 @@ public class MyWebChromeClient extends WebChromeClient
 				if(method.equals("jsIsLoaded")){
 					ma.findViewById(R.id.load_app).setVisibility(View.GONE);
 				}
-				if(method.equals("showCityPickerDialog")){
+				/*if(method.equals("showCityPickerDialog")){
 			
 					ma.showDialog(CityPickerDialogFragment.newInstance( ));
-				}
+				}*/
 			}
 			catch (JSONException e)
 			{}

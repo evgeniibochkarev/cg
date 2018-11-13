@@ -1,9 +1,12 @@
 package ru.chitaigorod.android.utils;
+import android.app.*;
+import android.content.*;
 import android.net.*;
-import java.io.*;
 import android.support.v7.app.*;
+import java.io.*;
 import java.util.*;
 import org.json.*;
+import ru.chitaigorod.android.*;
 
 public class Utils
 {
@@ -15,6 +18,12 @@ public class Utils
 			return "";
 		}
 	}
+	public static ProgressDialog generateProgressDialog(Context context, boolean cancelable) {
+        ProgressDialog progressDialog = new ProgressDialog(context, R.style.ProgressTheme);
+        progressDialog.setMessage(context.getString(R.string.Loading));
+        progressDialog.setCancelable(cancelable);
+        return progressDialog;
+    }
 	public static String getJSByTag(AppCompatActivity act,String inFile) {
         String tContents = "javascript:console.log('MAGIC'+document.getElementsByTagName('html')[0].innerHTML);";
 

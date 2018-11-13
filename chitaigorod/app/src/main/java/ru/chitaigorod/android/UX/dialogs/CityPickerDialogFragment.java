@@ -86,7 +86,7 @@ public class CityPickerDialogFragment extends BaseDialogFragment
     
     FloatingSearchView mSearchView;
 
-	public static CityPickerDialogFragment newInstance( ) {
+	public static CityPickerDialogFragment newInstance() {
         CityPickerDialogFragment dialogFragment = new CityPickerDialogFragment();
         return dialogFragment;
     }

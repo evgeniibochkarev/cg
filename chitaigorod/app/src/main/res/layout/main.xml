@@ -5,35 +5,63 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:fitsSystemWindows="true">
-	
+
 	<RelativeLayout
 		android:layout_height="match_parent"
-		android:layout_width="match_parent"
-	>
-	<FrameLayout
-		android:id="@+id/container"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:layout_above="@+id/bottomBar"/>
+		android:layout_width="match_parent">
 
-	<com.roughike.bottombar.BottomBar
-		android:id="@+id/bottomBar"
-		android:layout_width="match_parent"
-		android:layout_height="60dp"
-		android:layout_alignParentBottom="true"
-		android:background="@color/colorPrimary"
-		app:bb_activeTabAlpha="1"
-		app:bb_activeTabColor="#FFFFFF"
-		app:bb_inActiveTabAlpha="0.4"
-		app:bb_inActiveTabColor="#FFFFFF"
-		app:bb_tabXmlResource="@xml/bottombar_tabs"/>
+		<FrameLayout
+			android:id="@+id/container"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_above="@+id/bottomBar"/>
+
+		<com.roughike.bottombar.BottomBar
+			android:id="@+id/bottomBar"
+			android:layout_width="match_parent"
+			android:layout_height="60dp"
+			android:layout_alignParentBottom="true"
+			android:background="@color/colorPrimary"
+			app:bb_activeTabAlpha="1"
+			app:bb_activeTabColor="#FFFFFF"
+			app:bb_inActiveTabAlpha="0.4"
+			app:bb_inActiveTabColor="#FFFFFF"
+			app:bb_tabXmlResource="@xml/bottombar_tabs"/>
+
 	</RelativeLayout>
+
 	<RelativeLayout
 		android:layout_height="match_parent"
 		android:layout_width="match_parent"
 		android:id="@+id/load_app"
 		android:background="@color/cg_blue"
 		android:layout_alignParentTop="true">
+
+		<ImageView
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:contentDescription="@string/content_description_background"
+			android:scaleType="centerCrop"
+			android:src="@drawable/login_background"/>
+
+		<ImageView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:contentDescription="@string/content_description_background"
+			android:scaleType="centerCrop"
+			android:src="@drawable/logo"
+			android:layout_centerInParent="true"/>
+
+		<ProgressBar
+			style="?android:attr/progressBarStyleHorizontal"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:id="@+id/progress"
+			android:indeterminate="true"
+			android:layout_alignParentBottom="true"
+			android:paddingBottom="0dp"
+			android:layout_marginBottom="0dp"/>
+
 	</RelativeLayout>
 
 </RelativeLayout>

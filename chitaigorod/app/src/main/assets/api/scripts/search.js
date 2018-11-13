@@ -212,7 +212,7 @@ body
        fuzziness: 0.7,
 	   "slop":3,
        "operator": "or",
-      fields: ["name.lowercase_space", "author_t", "author"]// ['Field1^1000', 'Field2^3', 'Field3^2', 'Field4']
+      fields: ["name","name.lowercase_space", "author_t", "author"]// ['Field1^1000', 'Field2^3', 'Field3^2', 'Field4']
     }
   )
  body
@@ -227,6 +227,7 @@ body
       fields: ["name.lowercase_space", "author_t", "author"]// ['Field1^1000', 'Field2^3', 'Field3^2', 'Field4']
     }
   )
+ //body.orQuery("match", "name", val);
  //body.query('multiMatch', [ 'name.lowercase_space', "author"], "дэн", "phrase_prefix")
 /*
 body.orQuery("bool", (f) => { 

@@ -56,6 +56,15 @@ define([ 'jquery'], function () {
 					output.photos.push(imgHTML.getAttribute("src"));
 				})
 				
+				output.prop = []
+				var propOut = doc.getElementsByClassName("product-prop");
+				[].forEach.call(propOut, function(propHTML){
+					output.prop.push({
+						title: propHTML.getElementsByTagName("div")[0].textContent.replace(/(\r\n\t|\n|\t|\s\s|\r\t)/gm,""),
+						value: propHTML.getElementsByTagName("div")[1].textContent.replace(/(\r\n\t|\n|\t|\s\s|\r\t)/gm,"")
+					});
+				});
+				
 				
 				/*
 				

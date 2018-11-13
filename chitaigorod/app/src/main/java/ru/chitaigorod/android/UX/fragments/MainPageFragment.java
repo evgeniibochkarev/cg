@@ -9,6 +9,7 @@ import android.view.View.*;
 import java.util.*;
 import ru.chitaigorod.android.entities.*;
 import org.json.*;
+import ru.chitaigorod.android.UX.dialogs.*;
 
 public class MainPageFragment extends BaseFragment
 {
@@ -47,7 +48,7 @@ public class MainPageFragment extends BaseFragment
 					if (mFragmentNavigation != null) {
 						EntryElasticSearchFilter elasticFilter = new EntryElasticSearchFilter();
 						
-						mFragmentNavigation.pushFragment(SearchFragment.newInstance("воровка", new EntryRecyclerSearchFilter(), elasticFilter));
+						mFragmentNavigation.showDialog(AuthDialogFragment.newInstance());
 
 					}
 				}

@@ -6,28 +6,28 @@
     <string name="android_key" translatable="false">AIzaSyB4b2hBDqGh6yakmERv95JNMuSGbvf20jo</string>
 
     <!-- General strings-->
-    <string name="No_network_connection">No network connection</string>
+    <string name="No_network_connection">Отсутствует интернет соединение</string>
     <string name="Internal_error">Internal error, please try it later</string>
-    <string name="Loading">Loading …</string>
-    <string name="Retry">Retry</string>
+    <string name="Loading">Загрузка…</string>
+    <string name="Retry">Повторить</string>
     <string name="Ok">OK</string>
-    <string name="Cancel">Cancel</string>
-    <string name="Close">Close</string>
+    <string name="Cancel">Отмена</string>
+    <string name="Close">Закрыть</string>
     <string name="Clear">Сбросить</string>
-    <string name="Undo">Undo</string>
+    <string name="Undo">Назад</string>
     <string name="Required_field">Required field</string>
     <string name="The_entries_must_match">The entries must match</string>
-    <string name="Content_is_empty">Content is empty.</string>
+    <string name="Content_is_empty">Не найдено.</string>
 
     <!-- Strings related to splash screen -->
     <string name="Select_shop">Select shop</string>
     <string name="Select_the_country_where_you_want_to_shop">Select the country \n where you want to shop </string>
-    <string name="Continue">Continue</string>
+    <string name="Continue">Продолжить</string>
 
     <!-- Main activity related -->
     <string name="Another_click_for_leaving_app">Another click for leaving app</string>
     <string name="All_categories">All categories</string>
-    <string name="menu_action_search">Search</string>
+    <string name="menu_action_search">Поиск</string>
     <string name="Type_your_wish">Type your wish</string>
     <string name="menu_action_cart">Shopping cart</string>
     <string name="menu_action_wishlist">Wishlist</string>
@@ -43,7 +43,7 @@
     <string name="Filter_unavailable">Filter is unavailable</string>
     <string name="Products_not_found">Products not found.</string>
     <string name="Product_not_found">Product not found.</string>
-    <string name="ADD_TO_CART">ADD TO CART</string>
+    <string name="ADD_TO_CART">В корзину</string>
     <string name="SEND_TO_A_FRIEND">SEND TO A FRIEND</string>
     <string name="RECOMMENDED">RECOMMENDED</string>
     <string name="Select_size">Select size</string>
@@ -74,11 +74,11 @@
     <string name="ZIP">ZIP</string>
 
     <string name="Changing_the_password">Changing the password</string>
-    <string name="Password">Password</string>
-    <string name="New_password">New password</string>
+    <string name="Password">Пароль</string>
+    <string name="New_password">Новый пароль</string>
     <string name="Password_again">Password again</string>
     <string name="Change_password">Change password</string>
-    <string name="Save">Save</string>
+    <string name="Save">Сохранить</string>
 
     <string name="My_orders">My orders</string>
     <string name="Branches">Branches</string>
@@ -86,21 +86,21 @@
 
 
     <!-- Login related strings-->
-    <string name="Log_in">Log in</string>
-    <string name="Log_out">Log out</string>
+    <string name="Log_in">Войти</string>
+    <string name="Log_out">Выйти</string>
     <string name="Log_in_to_shop_via">Log in to shop via</string>
-    <string name="Log_in_to_shop_via_email">Log in to shop via email</string>
-    <string name="Dont_have_an_account">Don\'t have an account?</string>
-    <string name="Skip">Skip</string>
-    <string name="Forgot_your_password">Forget your password?</string>
-    <string name="Email_for_recovery">Email for recovery</string>
+    <string name="Log_in_to_shop_via_email">Авторизация</string>
+    <string name="Dont_have_an_account">Нет аккаунта?</string>
+    <string name="Skip">Пропустить</string>
+    <string name="Forgot_your_password">Забыли?</string>
+    <string name="Email_for_recovery">Email для восстановления</string>
     <string name="Reset">Reset</string>
-    <string name="Log_me_in">Log me in</string>
+    <string name="Log_me_in">Войти</string>
     <string name="E_MAIL">E-MAIL</string>
     <string name="FACEBOOK">FACEBOOK</string>
-    <string name="Register">Register</string>
-    <string name="Male">Male</string>
-    <string name="Female">Female</string>
+    <string name="Register">Регистрация</string>
+    <string name="Male">Сужской</string>
+    <string name="Female">Женский</string>
     <string name="Check_your_email_we_sent_you_an_confirmation_email">Check your email. We sent you an confirmation email about reseting password</string>
     <string name="Facebook_login_failed">Facebook login failed.</string>
     <string name="Receiving_facebook_profile_failed">Receiving facebook profile failed</string>
@@ -116,7 +116,7 @@
     <string name="Please_select_a_size">Please select a size.</string>
     <string name="added_to_cart">added to cart</string>
     <string name="Go_to_cart">Go to cart</string>
-    <string name="Delete">Delete</string>
+    <string name="Delete">Удалить</string>
     <string name="Edit">Edit</string>
     <string name="Update_item">Update:</string>
     <string name="The_item_has_been_successfully_removed">The item has been successfully removed</string>
@@ -182,7 +182,7 @@
     <string name="format_space_prefix"> %1$s</string>
     <string name="format_comma_prefix">, %1$s</string>
     <string name="format_string_division">%1$s / %2$s</string>
-    <string name="format_quantity">%1$d pcs</string>
+    <string name="format_quantity">%1$d шт.</string>
     <string name="format_plus">+ %1$s</string>
     <string name="format_number">%1$d</string>
     <string name="format_price_range">%1$d %2$s - %3$d %4$s</string>

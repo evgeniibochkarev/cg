@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/custom_view_horizontal_counter_rl"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:layout_marginLeft="@dimen/base_margin_horizontal"
+	android:layout_marginRight="@dimen/base_margin_horizontal"
+	android:layout_marginTop="@dimen/base_margin_vertical"
+	android:clickable="true"
+	android:focusable="true">
+
+	<ImageButton
+		android:id="@+id/custom_view_horizontal_counter_minus"
+		android:background="?attr/selectableItemBackgroundBorderless"
+		android:tint="@color/grey_lighter"
+		
+		style="?android:attr/buttonBarButtonStyle"
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:src="@drawable/ic_remove_circle_outline_black_18dp"
+		android:layout_toLeftOf="@+id/custom_view_horizontal_counter_value"/>
+
+	<TextView
+		android:id="@+id/custom_view_horizontal_counter_value"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="3dp"
+		android:layout_marginStart="3dp"
+		android:singleLine="true"
+		android:text="0"
+		android:textColor="@color/textPrimary"
+		android:textSize="16sp"
+		android:textStyle="bold"
+		android:layout_centerInParent="true"
+		android:layout_marginRight="3dp"/>
+
+	<ImageButton
+		android:id="@+id/custom_view_horizontal_counter_plus"
+		android:background="?attr/selectableItemBackgroundBorderless"
+		style="?android:attr/buttonBarButtonStyle"
+		android:tint="@color/grey_lighter"
+		
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:src="@drawable/ic_add_circle_outline_black_18dp"
+		android:layout_toRightOf="@+id/custom_view_horizontal_counter_value"/>
+
+</RelativeLayout>
+

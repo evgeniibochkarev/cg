@@ -21,28 +21,14 @@
 			android:gravity="center_horizontal"
 			android:orientation="vertical">
 
-			<android.support.v7.widget.RecyclerView
-				android:id="@+id/product_images_recycler_view"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"/>
-
-			<HorizontalScrollView
-				android:id="@+id/product_images_scroll_view"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:scrollbars="none">
-
-				<LinearLayout
-					android:id="@+id/product_images_layout"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_gravity="start"
-					android:background="@color/white"
-					android:orientation="horizontal">
-
-				</LinearLayout>
-
-			</HorizontalScrollView>
+			<ru.chitaigorod.android.UX.custom_view.ResizableImageViewHeight
+				android:id="@+id/product_main_image_view"
+				android:layout_width="match_parent"
+				android:layout_height="300dp"
+				android:adjustViewBounds="true"
+				android:contentDescription="@string/content_description_product_image"
+				android:minWidth="160dp"
+				android:scaleType="fitCenter"/>
 
 			<RelativeLayout
 				android:layout_width="match_parent"
@@ -76,7 +62,7 @@
 							android:id="@+id/product_name"
 							android:layout_width="match_parent"
 							android:layout_height="wrap_content"
-							android:gravity="center"
+							android:gravity="left"
 							android:textSize="25sp"
 							tools:text="Test product name"/>
 
@@ -84,7 +70,7 @@
 							android:id="@+id/product_author"
 							android:layout_width="match_parent"
 							android:layout_height="wrap_content"
-							android:gravity="center"
+							android:gravity="left"
 							android:textSize="15sp"
 							tools:text="Test product author"/>
 
@@ -111,7 +97,7 @@
 								android:layout_height="wrap_content"
 								android:layout_centerInParent="true"
 								android:padding="6dp"
-								android:textColor="@color/colorAccent"
+								android:textColor="@color/black"
 								android:textSize="20sp"
 								android:textStyle="bold"
 								tools:text="995 eur"/>
@@ -138,15 +124,13 @@
 					<View
 						android:layout_width="match_parent"
 						android:layout_height="1px"
-						android:layout_marginBottom="@dimen/base_margin_vertical"
 						android:layout_marginTop="@dimen/base_margin_vertical_half"
 						android:background="@color/line_light_grey"/>
 
 					<ru.chitaigorod.android.UX.custom_view.ButtonAddToCart
 						android:id="@+id/product_add_to_cart_button"
 						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"				
-					/>
+						android:layout_height="wrap_content"/>
 
 					<View
 						android:layout_width="match_parent"
@@ -157,9 +141,60 @@
 					<LinearLayout
 						android:layout_width="match_parent"
 						android:layout_height="wrap_content"
+						android:id="@+id/itemvewerfragmentTextView_countphoto"
+						android:orientation="vertical">
+						
+						<TextView
+							android:layout_height="wrap_content"
+							android:paddingLeft="@dimen/base_margin_horizontal"
+							android:paddingRight="@dimen/base_margin_horizontal"
+							android:layout_width="wrap_content"
+							android:text="Все фото"
+							android:textColor="@color/black"
+							android:textSize="15sp"
+							android:textStyle="bold"
+							/>
+						<android.support.v7.widget.RecyclerView
+							android:id="@+id/product_images_recycler_view"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"/>
+
+						<HorizontalScrollView
+							android:id="@+id/product_images_scroll_view"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:scrollbars="none">
+
+							<LinearLayout
+								android:id="@+id/product_images_layout"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:layout_gravity="start"
+								android:background="@color/white"
+								android:orientation="horizontal">
+
+							</LinearLayout>
+
+						</HorizontalScrollView>
+
+						
+
+					</LinearLayout>
+
+					<LinearLayout
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
 						android:orientation="vertical"
 						android:padding="@dimen/base_margin_horizontal">
 
+						<TextView
+							android:layout_height="wrap_content"
+							android:layout_width="wrap_content"
+							android:text="Инфо"
+							android:textColor="@color/black"
+							android:textSize="15sp"
+							android:textStyle="bold"
+						/>
 						<TextView
 							android:id="@+id/product_info"
 							android:layout_width="match_parent"
@@ -167,8 +202,21 @@
 							android:layout_marginBottom="@dimen/base_margin_vertical"
 							android:fontFamily="sans-serif-light"
 							android:textSize="14sp"/>
+						
+						<RelativeLayout
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:descendantFocusability="blocksDescendants">
 
-						<Button
+							<android.support.v7.widget.RecyclerView
+								android:id="@+id/product_prop_info_recycler_view"
+								android:layout_width="match_parent"
+								android:layout_height="wrap_content"/>
+
+						</RelativeLayout>
+						
+						
+						<!--<Button
 							android:id="@+id/product_send_to_a_friend"
 							style="?android:attr/borderlessButtonStyle"
 							android:layout_width="match_parent"
@@ -192,14 +240,11 @@
 							android:layout_marginTop="@dimen/base_margin_vertical"
 							android:text="@string/RECOMMENDED"
 							android:textSize="16sp"
-							android:textStyle="bold"/>
+							android:textStyle="bold"/>-->
 
 					</LinearLayout>
-
-					<android.support.v7.widget.RecyclerView
-						android:id="@+id/product_recommended_images_recycler"
-						android:layout_width="match_parent"
-						android:layout_height="220dp"/>
+					
+					
 
 				</LinearLayout>
 

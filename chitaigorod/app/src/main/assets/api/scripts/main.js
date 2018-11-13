@@ -3,7 +3,7 @@ var API =
 		item:{},
 		cart:{},
 		search:{},
-		city:{}
+		city:{},
 	};
 requirejs.config({
   paths: {
@@ -36,7 +36,7 @@ API.search =
 		);}
 }*/
 
-define(['item', 'search', 'city', 'jquery'], 	function(item, search, city) {
+define(['item', 'search', 'city', 'cart', 'account', 'jquery'], 	function(item, search, city, cart, account) {
 
 
 API.cart.getDataCart = 
@@ -106,8 +106,50 @@ API.item.addToBasket = function(param){
 		API.cart.getDataCart(null);
 	})
 }
+
+API.CartFragment={};
+API.CartFragment.getBasket = function(param){
+	param = {action: 'get_basket'}
+	cart.getDataCart(param, function(data){
+		console.log("MAGIC{ method:'CartFragment.getBasket', data:"+JSON.stringify(data)+"}")
+	});
+}
+
+API.CartFragment.onGoOrder = function(param){
+	account.checkAuth(function(isAuth){
+		console.log(isAuth);
+		if(Boolean(isAuth)){		
+			console.log("MAGIC{ method:'CartFragment.showOrder', data:{} }");
+		}else{
+			console.log("MAGIC{ method:'CartFragment.showAuth', data:{} }");
+		}
+	});
+}
+API.AuthDialog = {};
+
+API.AuthDialog.auth = function(param){
+	account.auth(param, function(data){
+		//console.log("MAGIC{ method:'ItemViewerFragment_getProduct', data:"+JSON.stringify(data)+"}
+		console.log("MAGIC{ method:'AuthDialog.auth', data:"+JSON.stringify(data)+"}");
+	})
+}
+
+API.AuthDialog.reg = function(param){
+	account.reg(param, function(data){
+		//console.log("MAGIC{ method:'ItemViewerFragment_getProduct', data:"+JSON.stringify(data)+"}
+		
+		//API.AuthDialog.auth({"USER_LOGIN": param.REGISTER_LOGIN, "USER_PASSWORD": param.USER_PASSWORD});
+		console.log("MAGIC{ method:'AuthDialog.reg', data:"+JSON.stringify(data)+"}");
+	})
+}
 	
-	
+API.OrderFragment = {};
+API.OrderFragment.getPage = function(param){
+	account.getOrderHtml(function(data){
+		console.log("MAGIC{ method:'OrderFragment.getOrderPage', data:"+JSON.stringify(data)+"}")
+						
+	});
+}
 console.log("MAIN{method:'jsIsLoaded'}");
 city.checkCity();
 

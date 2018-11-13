@@ -16,6 +16,7 @@ import java.util.*;
 import android.text.*;
 import android.graphics.*;
 import ru.chitaigorod.android.UX.custom_view.*;
+import com.squareup.picasso.*;
 
 public class ItemViewerFragment extends BaseFragment
 {
@@ -29,14 +30,15 @@ public class ItemViewerFragment extends BaseFragment
 
 	private ButtonAddToCart productAddToCart;
     // Fields referencing product related views.
-    private TextView productName;
+    private ResizableImageViewHeight productMainImage;
+	private TextView productName;
 	private TextView productAuthor;
     private TextView productPriceDiscount;
     private TextView productPrice;
     private TextView productDiscription;
     private TextView productPriceDiscountPercent;
 
-	
+	private RecyclerView productPropRecycler;
 	private RecyclerView productImagesRecycler;
 	private ArrayList<String> productImagesUrls;
 	private ProductImagesRecyclerAdapter productImagesAdapter;
@@ -77,6 +79,10 @@ public class ItemViewerFragment extends BaseFragment
         productPrice = (TextView) view.findViewById(R.id.product_price);
         productDiscription = (TextView) view.findViewById(R.id.product_info);
 		productImagesUrls = new ArrayList<String>();
+		productMainImage = (ResizableImageViewHeight) view.findViewById(R.id.product_main_image_view);
+		
+		productPropRecycler = (RecyclerView) view.findViewById(R.id.product_prop_info_recycler_view);
+		
 		
 		getProduct();
 		prepareProductImagesLayout(view);
@@ -114,10 +120,9 @@ public class ItemViewerFragment extends BaseFragment
 			
 			productAddToCart.setStatus(btnStatus);
 			 
-			 productPrice.setText(oData.getString("price"));
+			productPrice.setText(oData.getString("price")+" ₽");
 			 if((oPrice - price ) > .1){
-				 //String htmlTaggedString  = "<strike>"+oData.getString("old_price")+"</strike>";
-				 //Spanned textSpan  =  android.text.Html.fromHtml(htmlTaggedString);
+
 				 productPriceDiscount.setText(oData.getString("old_price"));
 				 productPriceDiscount.setPaintFlags(productPriceDiscount.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);				 
 			 	productPriceDiscountPercent.setText("-" +  (int)(100 - (price*100)/oPrice) + "℅");
@@ -130,14 +135,38 @@ public class ItemViewerFragment extends BaseFragment
 			progressView.setVisibility(View.GONE);
 			
 			productName.setText(json.getJSONObject("data").getString("name"));
-			productAuthor.setText(json.getJSONObject("data").getString("author"));	
-			productDiscription.setText(json.getJSONObject("data").getString("description"));
+			
+			productAuthor.setText(item.getAuthor());	
+			productDiscription.setText(item.getDesc());
+			
+			ProductPropRecyclerAdapter productPropAdapter = new ProductPropRecyclerAdapter(json.getJSONObject("data").getJSONArray("prop"));
+			productPropRecycler.setHasFixedSize(true);
+			
+			LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+			mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+			productPropRecycler.setLayoutManager(mLayoutManager);
+
+			// Disabled nested scrolling since Parent scrollview will scroll the content.
+			productPropRecycler.setNestedScrollingEnabled(false);
+			
+			productPropRecycler.setAdapter(productPropAdapter);
 			
 			JSONArray photos = json.getJSONObject("data").getJSONArray("photos");
 			for(int i = 0; i < photos.length(); i++){
 				productImagesUrls.add(photos.getString(i));
 				productImagesAdapter.addLast(photos.getString(i));
 			}
+			if(productImagesUrls.size() < 2){
+				getActivity().findViewById(R.id.itemvewerfragmentTextView_countphoto).setVisibility(View.GONE);
+		
+			}
+			Picasso.get()
+                .load(productImagesUrls.get(0))
+                .fit().centerInside()
+                .placeholder(R.drawable.placeholder_loading)
+                .error(R.drawable.placeholder_error)
+                .into(productMainImage);
+			
 			
 			
 			
@@ -197,9 +226,9 @@ public class ItemViewerFragment extends BaseFragment
 
         // For small screen even smaller images.
         if (densityDpi <= DisplayMetrics.DENSITY_MEDIUM) {
-            params.height = (int) (dm.heightPixels * 0.4);
+            params.height = (int) (dm.heightPixels * 0.2);
         } else {
-            params.height = (int) (dm.heightPixels * 0.48);
+            params.height = (int) (dm.heightPixels * 0.28);
         }
 
     }

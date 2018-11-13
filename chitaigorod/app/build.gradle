@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "ru.chitaigorod.android"
-        minSdkVersion 14
+        minSdkVersion 15
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -27,7 +27,6 @@ dependencies {
 	compile 'com.squareup.picasso:picasso:2.71828'
 	// https://mvnrepository.com/artifact/mbanje.kurt/fabbutton
 compile 'mbanje.kurt:fabbutton:1.2.1'
-
 
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }

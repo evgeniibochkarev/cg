@@ -194,9 +194,9 @@ public class MainActivity extends AppCompatActivity implements FragNavController
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if (mNavController != null) {
+       /* if (mNavController != null) {
             mNavController.onSaveInstanceState(outState);
-        }
+        }*/
     }
 
 	public void showDialog(DialogFragment frg)

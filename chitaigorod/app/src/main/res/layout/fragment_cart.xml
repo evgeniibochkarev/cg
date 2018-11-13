@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+
+	<android.support.design.widget.AppBarLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+
+		<android.support.v7.widget.Toolbar
+			android:id="@+id/fragment_cart_toolbar"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="@color/cg_blue">
+
+		</android.support.v7.widget.Toolbar>
+
+	</android.support.design.widget.AppBarLayout>
+
+	<android.support.v7.widget.RecyclerView
+		android:id="@+id/cart_recycler"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:scrollbars="vertical"
+		android:paddingTop="60dp"
+		android:paddingBottom="60dp"/>
+
+	<RelativeLayout
+		android:id="@+id/cart_bottom_bar"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="bottom"
+		android:padding="@dimen/base_margin_half">
+
+		<TextView
+			android:id="@+id/cart_bottom_bar_textview"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:layout_width="wrap_content"
+			android:text="Общая стоимость"/>
+
+		<TextView
+			android:id="@+id/cart_bottom_bar_text"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:layout_width="wrap_content"
+			android:text=" "
+			android:layout_below="@+id/cart_bottom_bar_textview"
+			android:textStyle="bold"/>
+
+		<Button
+			android:id="@+id/cart_buy_button"
+			style="@style/buttonPrimaryStyle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			
+			android:text="Купить (0)"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"/>
+
+	</RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>
+

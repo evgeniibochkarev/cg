@@ -60,6 +60,9 @@ public class Item_book
 		catch (JSONException e)
 		{}
 	}
+	public String getDesc(){
+		return data.get("content").toString();
+	}
 	public String getBookId(){
 		return data.get("id").toString();
 	}
