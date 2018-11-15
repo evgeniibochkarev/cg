@@ -93,16 +93,28 @@ API.city.setCity =
 	};
 
 API.item.ItemViewerFragment_getProduct = 
-function(param){
-	API.item.getOtherData(param);
-	item.ItemViewerFragment_getProduct(param, function(data){
-		console.log("MAGIC{ method:'ItemViewerFragment_getProduct', data:"+JSON.stringify(data)+"}")
-		 //item.g
-	});
+function(id){
+$.ajax({
+	url:"https://search.chitai-gorod.ru/catalog/catalog/"+id,
+	
+	success:function(ajaxOut){
+		var param = ajaxOut._source;
+		
+		item.ItemViewerFragment_getProduct(param, function(data){
+			
+			console.log("MAGIC{ method:'ItemViewerFragment_getProduct', item:"+JSON.stringify(ajaxOut)+" ,data:"+JSON.stringify(data)+"}")
+		});
+		item.getOtherData(param, function(outer){
+				//console.log(JSON.stringify(outer));
+				console.log("MAGIC{ method:'ItemViewerFragment_getOtherData', item:"+JSON.stringify(ajaxOut)+" ,data:"+JSON.stringify(outer)+"}")
+		});
+		
+	}
+})
 }
 API.item.addToBasket = function(param){
 	item.addToBasket(param, function(data){
-		API.item.getOtherData(param);
+		API.item.ItemViewerFragment_getProduct(param.id)
 		API.cart.getDataCart(null);
 	})
 }
@@ -119,7 +131,31 @@ API.CartFragment.onGoOrder = function(param){
 	account.checkAuth(function(isAuth){
 		console.log(isAuth);
 		if(Boolean(isAuth)){		
-			console.log("MAGIC{ method:'CartFragment.showOrder', data:{} }");
+			
+		$.ajax({
+			method: 'POST',
+            url: '/personal/ajax_basket.php',                 
+			data: {action: 'delete', id: param.forDel},
+			success: function(data){
+				var ajaxData = {action: 'update', items: param};
+               
+				$.ajax({
+                    method: 'POST',
+                    url: '/personal/ajax_basket.php',
+                    data: JSON.stringify(  ajaxData),
+                   // contentType: 'application/json',
+                    //dataType: "json",
+                    success: function (data, status) {
+                   // $scope.getData();
+				   console.log("DEB"+JSON.stringify(data));
+				   console.log("DEB"+JSON.stringify(param))
+					console.log("MAGIC{ method:'CartFragment.showOrder', data:{} }");
+					}
+                })
+  
+			}
+		});
+		      
 		}else{
 			console.log("MAGIC{ method:'CartFragment.showAuth', data:{} }");
 		}
@@ -150,9 +186,49 @@ API.OrderFragment.getPage = function(param){
 						
 	});
 }
+API.MainPageFragment = {};
+
+API.MainPageFragment.getHtml = function(param){
+	$.ajax({
+					type: "post",
+					//data : param,
+					url: "/index.php",
+					dataType: "html",
+					success: function (data) {  					  
+						//callback(data);
+					var parser = new DOMParser();  
+						var doc = parser.parseFromString(data, "text/html");
+
+						var title = doc.getElementsByClassName("slider__title");
+						var body = doc.getElementsByClassName("slider__viewport");
+						var arr = [];
+						
+						for(var i = 0; i< title.length; i++){
+							var arrBook = [];
+							var books = body[i].getElementsByClassName("product-card");
+							
+							for(var j = 0; j < books.length; j++){
+								var product = {};
+								product.id = books[j].getAttribute("data-product");
+								
+								product.name = books[j].getElementsByClassName("product-card__title")[0].innerHTML.replace (/(\r\n\t|\n|\t|\s\s|\r\t)/gm,"")    
+								product.img = books[j].getElementsByTagName("img")[0].getAttribute("src")
+								product.author = books[j].getElementsByClassName("product-card__author")[0].innerHTML.replace (/(\r\n\t|\n|\t|\s\s|\r\t)/gm,"")
+								product.price = books[j].getElementsByClassName("product-card__price")[0].textContent.replace (/(\r\n\t|\n|\t|\s\s|\r\t)/gm,"")
+													
+								arrBook.push(product);
+							}
+							arr.push( {title:title[i].textContent,  body: arrBook});
+						}
+						console.log("MAGIC{ method:'MainPageFragment.getHtml', data:"+JSON.stringify(arr)+"}");
+					}
+				});
+}
+
+API.MainPageFragment.getHtml(null);
 console.log("MAIN{method:'jsIsLoaded'}");
 city.checkCity();
-
+API.cart.getDataCart(null);
 
 
 

@@ -1,20 +1,22 @@
 package ru.chitaigorod.android.UX.fragments;
+
 import android.app.*;
 import android.os.*;
 import android.support.annotation.*;
 import android.support.v7.widget.*;
 import android.view.*;
+import android.view.View.*;
 import android.widget.*;
+import java.util.*;
 import org.json.*;
 import ru.chitaigorod.android.*;
 import ru.chitaigorod.android.UX.adapters.*;
-import ru.chitaigorod.android.listeners.*;
-import ru.chitaigorod.android.utils.*;
+import ru.chitaigorod.android.UX.dialogs.*;
 import ru.chitaigorod.android.entities.*;
 import ru.chitaigorod.android.interfaces.*;
-import java.util.*;
-import android.view.View.*;
-import ru.chitaigorod.android.UX.dialogs.*;
+import ru.chitaigorod.android.utils.*;
+
+import android.support.v7.widget.Toolbar;
 
 public class CartFragment extends BaseFragment
 {
@@ -36,7 +38,7 @@ public class CartFragment extends BaseFragment
 			
 			if (method.equals("CartFragment.getBasket"))
 			{
-				//cart = json.getJSONObject("data");
+				//cart = json.getJSONObject("data
 				cartRecyclerAdapter.refreshItems(json.getJSONObject("data").getJSONArray("basket"));
 			}
 			if(method.equals("CartFragment.showAuth")){
@@ -61,6 +63,7 @@ public class CartFragment extends BaseFragment
     private CartRecyclerAdapter cartRecyclerAdapter;
 	private TextView cartSumText;
     private Button cartBuyBtn;
+	private String forDel;
 	private List<EntryProductCart> currBasket = new ArrayList<>();
     
     @Override
@@ -69,6 +72,9 @@ public class CartFragment extends BaseFragment
         
         View view = inflater.inflate(R.layout.fragment_cart, container, false);
 
+		Toolbar tb = (Toolbar) view.findViewById(R.id.fragment_cart_toolbar);
+		tb.setTitle("Корзина");
+		
 		cartSumText = (TextView) view.findViewById(R.id.cart_bottom_bar_text);
         cartBuyBtn = (Button) view.findViewById(R.id.cart_buy_button);
 		
@@ -78,12 +84,18 @@ public class CartFragment extends BaseFragment
 				{
 					if(currBasket.size() > 0){
 						JSONArray data = new JSONArray();
-
 						for(int i = 0; i< currBasket.size(); i++){
 							data.put(currBasket.get(i).toJSON());
+							
 						}
 
 						JSONObject out = new JSONObject();
+						try
+						{
+							out.put("forDel", forDel);
+						}
+						catch (JSONException e)
+						{}
 						try
 						{
 							out.put("basket", data);
@@ -183,8 +195,9 @@ public class CartFragment extends BaseFragment
         cartRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
         cartRecyclerAdapter = new CartRecyclerAdapter(getActivity(), new CartRecyclerInterface() {
 				@Override
-				public void onBasketChange(List<EntryProductCart> basket)
+				public void onBasketChange(List<EntryProductCart> basket, String _forDel)
 				{
+					forDel = _forDel;
 					currBasket = basket;
 					Double sum = .0;
 					for(int i = 0; i < basket.size(); i++){

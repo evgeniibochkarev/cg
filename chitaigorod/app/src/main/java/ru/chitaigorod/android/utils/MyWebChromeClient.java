@@ -86,14 +86,11 @@ public class MyWebChromeClient extends WebChromeClient
 			catch (JSONException e)
 			{}
 
-
-
 			//mListener.onPageSuccess(msg);
-			/* process HTML */
-
+			/* procss HTML */
 			return true;
 		}
-
+		
 		return false;
 		// TODO: Implement this method
 		//return super.onConsoleMessage(consoleMessage);

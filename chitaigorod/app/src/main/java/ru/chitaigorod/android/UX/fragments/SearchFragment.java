@@ -268,7 +268,7 @@ public class SearchFragment extends BaseFragment
         productsRecyclerAdapter = new ProductsRecyclerAdapter(getActivity(), new CategoryRecyclerInterface() {
 				@Override
 				public void onProductSelected(View caller, Item_book product) {
-					mFragmentNavigation.pushFragment(ItemViewerFragment.newInstance(product));
+					mFragmentNavigation.pushFragment(ItemViewerFragment.newInstance(product.getBookId()));
 				}
 			});
     }

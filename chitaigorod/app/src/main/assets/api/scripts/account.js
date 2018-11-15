@@ -81,7 +81,7 @@ define([ 'jquery'], function () {
 					type: "post",
 					//data : param,
 					url: "/personal/order.php",
-					//dataType: "text",
+					dataType: "html",
 					success: function (data) {  					  
 						callback(data);
 					/*var parser = new DOMParser();  

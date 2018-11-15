@@ -94,7 +94,7 @@ define([ 'jquery'], function () {
             contentType: 'application/json',
         	dataType: 'json',
 			success:function (data) {		
-				//console.log(data);
+				//console.log(JSON.stringify(data));
 				callback(data);
 			}, error: function(err){
 				console.log(JSON.stringify(err));

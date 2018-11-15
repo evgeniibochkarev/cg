@@ -17,6 +17,7 @@ public class OrderFragment extends BaseFragment
 {
 
 	private WebView wv;
+	private ProgressBar pb;
 	private EditText tv;
 	@Override
 	public void APIResponse(JSONObject json)
@@ -66,6 +67,7 @@ public class OrderFragment extends BaseFragment
 
         View view = inflater.inflate(R.layout.fragment_order, container, false);
 
+		pb = (ProgressBar) view.findViewById(R.id.order_pb);
 		wv = (WebView) view.findViewById(R.id.order_webview);
 		wv.setWebViewClient(new MyOrderWebViewClient());
 		
@@ -94,7 +96,8 @@ public class OrderFragment extends BaseFragment
 		private boolean handleUrl(WebView view, Uri uri){
 			List<String > whiteList = new ArrayList();
 			whiteList.add("https://ad.admitad.");
-			whiteList.add("https://www.chitai-gorod.ru/personal/order.php");
+			whiteList.add("https://www.chitai-gorod.ru/personal/order.php");		
+			whiteList.add("https://securepayments.sberbank.ru");
 			
 			for(String wl : whiteList)
 				if( uri.toString ().startsWith(wl)){
@@ -197,6 +200,15 @@ public class OrderFragment extends BaseFragment
 			}
 		}
 
+		@Override
+		public void onPageFinished(WebView view, String url)
+		{
+			pb.setVisibility(View.GONE);
+			wv.setVisibility(View.VISIBLE);
+			super.onPageFinished(view, url);
+		}
+
+		
 		private String isMyRes(Uri uri){
 			if(uri.getPath().contains("style.min.css")){
 				return "/css/"+ uri.getPathSegments().get(uri.getPathSegments().size() - 1);

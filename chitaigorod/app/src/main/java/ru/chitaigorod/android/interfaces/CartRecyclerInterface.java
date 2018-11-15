@@ -4,5 +4,5 @@ import java.util.*;
 
 
 public interface CartRecyclerInterface {
-    void onBasketChange(List<EntryProductCart> basket);
+    void onBasketChange(List<EntryProductCart> basket, String forDel);
 }

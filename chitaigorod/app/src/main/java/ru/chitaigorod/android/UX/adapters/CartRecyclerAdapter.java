@@ -81,14 +81,23 @@ public class CartRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 	
 	private  void sendCurrBasket(){
 		List<EntryProductCart> currBasket = new ArrayList<>();
+		String forDel = "";
 		for(int i = 0; i < cartProductItems.size(); i++){
 			
 			EntryProductCart temp = cartProductItems.get(i);
-			if(temp.isChecked())
+			if(temp.isChecked()){
 				currBasket.add(temp);
+			}else{
+				try
+				{
+					forDel = forDel + temp.getId() + ",";
+				}
+				catch (JSONException e)
+				{}
+			}
 		}
 		
-		cartRecyclerInterface.onBasketChange(currBasket);
+		cartRecyclerInterface.onBasketChange(currBasket, forDel);
 			
 	}
 	

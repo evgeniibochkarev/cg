@@ -17,7 +17,6 @@ import android.webkit.*;
 import ru.chitaigorod.android.UX.dialogs.*;
 import java.util.concurrent.*;
 
-
 public class MainActivity extends AppCompatActivity implements FragNavController.TransactionListener, FragNavController.RootFragmentListener ,  OnTabReselectListener, OnTabSelectListener, BaseFragment.FragmentNavigation, BaseDialogFragment.FragmentNavigation// FragNavController.TransactionListener, FragNavController.RootFragmentListener ,ontab//BaseFragment.BaseFragmentCallbacks
 {
 

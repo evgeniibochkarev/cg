@@ -43,6 +43,7 @@ public class ItemViewerFragment extends BaseFragment
 	private ArrayList<String> productImagesUrls;
 	private ProductImagesRecyclerAdapter productImagesAdapter;
 
+	private String id;
     /**
      * Refers to the displayed product.
      */
@@ -52,10 +53,10 @@ public class ItemViewerFragment extends BaseFragment
      */
 	
 	
-	public static ItemViewerFragment newInstance(Item_book _item){
+	public static ItemViewerFragment newInstance(String id){
 		ItemViewerFragment itemViewer = new ItemViewerFragment();
 		
-		itemViewer.item = _item;
+		itemViewer.id = id;
 		//bundle.putSerializable("elastic_filter", (new EntryElasticSearchFilter()).getHashMap());
 		
 		return itemViewer;
@@ -95,7 +96,7 @@ public class ItemViewerFragment extends BaseFragment
 		
 		super.onViewCreated(view, savedInstanceState);
 		
-		productAddToCart.setOnClick(item, mFragmentNavigation);
+		
 	}
 
 	
@@ -106,12 +107,58 @@ public class ItemViewerFragment extends BaseFragment
 		try
 		{
 		String method = json.getString("method");
+			if(method.equals("ItemViewerFragment_getProduct")){
+				progressView.setVisibility(View.GONE);
+
+				if(item == null)
+					item = new Item_book(json.getJSONObject("item"));
+
+				productName.setText(json.getJSONObject("data").getString("name"));
+
+				productAuthor.setText(item.getAuthor());	
+				productDiscription.setText(item.getDesc());
+
+				ProductPropRecyclerAdapter productPropAdapter = new ProductPropRecyclerAdapter(json.getJSONObject("data").getJSONArray("prop"));
+				productPropRecycler.setHasFixedSize(true);
+
+				LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+				mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+				productPropRecycler.setLayoutManager(mLayoutManager);
+
+				// Disabled nested scrolling since Parent scrollview will scroll the content.
+				productPropRecycler.setNestedScrollingEnabled(false);
+
+				productPropRecycler.setAdapter(productPropAdapter);
+
+				JSONArray photos = json.getJSONObject("data").getJSONArray("photos");
+				for(int i = 0; i < photos.length(); i++){
+					productImagesUrls.add(photos.getString(i));
+					productImagesAdapter.addLast(photos.getString(i));
+				}
+				if(productImagesUrls.size() < 2){
+					getActivity().findViewById(R.id.itemvewerfragmentTextView_countphoto).setVisibility(View.GONE);
+
+				}
+				Picasso.get()
+					.load(productImagesUrls.get(0))
+					.fit().centerInside()
+					.placeholder(R.drawable.placeholder_loading)
+					.error(R.drawable.placeholder_error)
+					.into(productMainImage);
+
+
+
+
+
+				contentScrollLayout.setVisibility(View.VISIBLE);
+			}
 	
-	
-		if(method.equals("getOtherData")){
-			
+			if(method.equals("ItemViewerFragment_getOtherData")){
+				item = new Item_book(json.getJSONObject("item"));
+				
 			JSONObject oData = json.getJSONObject("data").getJSONObject(item.getBookId());
-			
+			 
+			productAddToCart.setOnClick(item, mFragmentNavigation);
 			
 			 Double price = oData.getDouble("price");
 			 Double oPrice = oData.getDouble("old_price");
@@ -129,53 +176,9 @@ public class ItemViewerFragment extends BaseFragment
 			 }else{
 			 	productPriceDiscountPercent.setVisibility(View.GONE);
 			 	productPriceDiscount.setVisibility(View.GONE);
-			 }
+			 } 
 		}
-		if(method.equals("ItemViewerFragment_getProduct")){
-			progressView.setVisibility(View.GONE);
 			
-			productName.setText(json.getJSONObject("data").getString("name"));
-			
-			productAuthor.setText(item.getAuthor());	
-			productDiscription.setText(item.getDesc());
-			
-			ProductPropRecyclerAdapter productPropAdapter = new ProductPropRecyclerAdapter(json.getJSONObject("data").getJSONArray("prop"));
-			productPropRecycler.setHasFixedSize(true);
-			
-			LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-			mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-			productPropRecycler.setLayoutManager(mLayoutManager);
-
-			// Disabled nested scrolling since Parent scrollview will scroll the content.
-			productPropRecycler.setNestedScrollingEnabled(false);
-			
-			productPropRecycler.setAdapter(productPropAdapter);
-			
-			JSONArray photos = json.getJSONObject("data").getJSONArray("photos");
-			for(int i = 0; i < photos.length(); i++){
-				productImagesUrls.add(photos.getString(i));
-				productImagesAdapter.addLast(photos.getString(i));
-			}
-			if(productImagesUrls.size() < 2){
-				getActivity().findViewById(R.id.itemvewerfragmentTextView_countphoto).setVisibility(View.GONE);
-		
-			}
-			Picasso.get()
-                .load(productImagesUrls.get(0))
-                .fit().centerInside()
-                .placeholder(R.drawable.placeholder_loading)
-                .error(R.drawable.placeholder_error)
-                .into(productMainImage);
-			
-			
-			
-			
-			
-			contentScrollLayout.setVisibility(View.VISIBLE);
-		}
-		
-		
-		
 		
 		
 		}
@@ -187,7 +190,7 @@ public class ItemViewerFragment extends BaseFragment
 	
 	private void getProduct(){
 		
-		
+		/*
 		JSONObject god = new JSONObject();
 		try
 		{
@@ -198,8 +201,8 @@ public class ItemViewerFragment extends BaseFragment
 		catch (JSONException e)
 		{}
 		//mFragmentNavigation.get(APIHelper.getData("item.getOtherData", god.toString()));
-
-		mFragmentNavigation.get(APIHelper.getData("item.ItemViewerFragment_getProduct", god));
+		*/
+		mFragmentNavigation.get(APIHelper.getData("item.ItemViewerFragment_getProduct", id));
 	}
 	
 	
