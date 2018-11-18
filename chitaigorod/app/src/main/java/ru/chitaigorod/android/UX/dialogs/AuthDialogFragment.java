@@ -41,7 +41,7 @@ public class AuthDialogFragment extends BaseDialogFragment
 	@Override
 	public void APIResponse(JSONObject json)
 	{
-		//String lol = "";
+		//Strng lol = "";
 		try
 		{
 			String method = json.getString("method");

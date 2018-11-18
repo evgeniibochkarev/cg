@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-	<ru.chitaigorod.android.UX.custom_view.NestedScrollView
+	<ru.chitaigorod.android.UX.custom_view.MyNestedScrollView
+		
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:clipToPadding="false"
+		
 		>
+	<RelativeLayout
+		android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+	>
 		
 	<android.support.v7.widget.AppCompatTextView
+		android:id="@+id/fragment_main_page_textView_head"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -22,10 +28,12 @@
         android:textSize="30sp" />
 
     <android.support.v7.widget.LinearLayoutCompat
+		android:id="@+id/fragment_main_page_line_head"
         android:layout_width="match_parent"
         android:layout_height="1dp"
+		android:layout_below="@id/fragment_main_page_textView_head"
         android:background="@color/colorPrimary" />
-
+	
 	<android.support.v7.widget.AppCompatTextView
 		android:id="@+id/fragment_main_page_textView_rv0"
 		android:layout_width="match_parent"
@@ -33,14 +41,17 @@
         android:gravity="left"
         android:padding="10dp"
         android:text="Загрузка..."
+		android:layout_below="@id/fragment_main_page_line_head"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="10sp" />
     <android.support.v7.widget.RecyclerView
         android:id="@+id/fragment_main_page_recyclerView0"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+		android:layout_below="@id/fragment_main_page_textView_rv0"
         android:orientation="horizontal"
         android:padding="10dp" />
+	
 	
 	<android.support.v7.widget.AppCompatTextView
 		android:id="@+id/fragment_main_page_textView_rv1"
@@ -49,6 +60,7 @@
         android:gravity="left"
         android:padding="10dp"
         android:text="Загрузка..."
+		android:layout_below="@id/fragment_main_page_recyclerView0"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="10sp" />
     <android.support.v7.widget.RecyclerView
@@ -56,7 +68,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+		android:layout_below="@id/fragment_main_page_textView_rv1"
         android:padding="10dp" />
+	
 	
 	<android.support.v7.widget.AppCompatTextView
 		android:id="@+id/fragment_main_page_textView_rv2"
@@ -65,6 +79,7 @@
         android:gravity="left"
         android:padding="10dp"
         android:text="Загрузка..."
+		android:layout_below="@id/fragment_main_page_recyclerView1"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="10sp" />
     <android.support.v7.widget.RecyclerView
@@ -72,6 +87,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+		android:layout_below="@id/fragment_main_page_textView_rv2"
         android:padding="10dp" />
 	
 	
@@ -82,6 +98,7 @@
         android:gravity="left"
         android:padding="10dp"
         android:text="Загрузка..."
+		android:layout_below="@id/fragment_main_page_recyclerView2"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="10sp" />
     <android.support.v7.widget.RecyclerView
@@ -89,7 +106,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+		android:layout_below="@id/fragment_main_page_textView_rv3"
         android:padding="10dp" />
-	
-	</ru.chitaigorod.android.UX.custom_view.NestedScrollView>
-</android.support.design.widget.CoordinatorLayout>
+	</RelativeLayout>
+	</ru.chitaigorod.android.UX.custom_view.MyNestedScrollView>
+</LinearLayout>

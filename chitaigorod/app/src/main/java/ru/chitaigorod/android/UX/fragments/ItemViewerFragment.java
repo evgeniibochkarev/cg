@@ -1,22 +1,24 @@
 package ru.chitaigorod.android.UX.fragments;
+
+import android.graphics.*;
 import android.os.*;
 import android.support.v7.widget.*;
 import android.util.*;
 import android.view.*;
 import android.view.View.*;
 import android.widget.*;
+import com.squareup.picasso.*;
+import java.util.*;
 import org.json.*;
 import ru.chitaigorod.android.*;
-import ru.chitaigorod.android.entities.*;
-import ru.chitaigorod.android.utils.*;
 import ru.chitaigorod.android.UX.adapters.*;
-import ru.chitaigorod.android.interfaces.*;
-import ru.chitaigorod.android.UX.dialogs.*;
-import java.util.*;
-import android.text.*;
-import android.graphics.*;
 import ru.chitaigorod.android.UX.custom_view.*;
-import com.squareup.picasso.*;
+import ru.chitaigorod.android.UX.dialogs.*;
+import ru.chitaigorod.android.entities.*;
+import ru.chitaigorod.android.interfaces.*;
+import ru.chitaigorod.android.utils.*;
+
+import android.support.v7.widget.Toolbar;
 
 public class ItemViewerFragment extends BaseFragment
 {
@@ -44,6 +46,8 @@ public class ItemViewerFragment extends BaseFragment
 	private ProductImagesRecyclerAdapter productImagesAdapter;
 
 	private String id;
+
+	private Toolbar toolbar;
     /**
      * Refers to the displayed product.
      */
@@ -66,6 +70,20 @@ public class ItemViewerFragment extends BaseFragment
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{	
 		View view = inflater.inflate(R.layout.item_vewer_fragment, container, false);
+		
+		toolbar = (Toolbar)view.findViewById(R.id.fragment_itemViewer_toolbar);
+		toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+		
+		toolbar.setNavigationOnClickListener(new OnClickListener(){
+				@Override
+				public void onClick(View p1)
+				{
+					// TODO: Implement this method
+					getActivity().onBackPressed();
+				}
+			});
+
+		
 		progressView = (ProgressBar) view.findViewById(R.id.product_progress);
 
         productContainer = (RelativeLayout) view.findViewById(R.id.product_container);
@@ -89,6 +107,7 @@ public class ItemViewerFragment extends BaseFragment
 		prepareProductImagesLayout(view);
 		return view;
 	}
+
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState)
@@ -114,7 +133,7 @@ public class ItemViewerFragment extends BaseFragment
 					item = new Item_book(json.getJSONObject("item"));
 
 				productName.setText(json.getJSONObject("data").getString("name"));
-
+				toolbar.setTitle(productName.getText());
 				productAuthor.setText(item.getAuthor());	
 				productDiscription.setText(item.getDesc());
 

@@ -12,7 +12,6 @@ import android.support.annotation.*;
 import android.support.v7.widget.*;
 import android.view.*;
 import android.widget.*;
-import com.gildaswise.horizontalcounter.*;
 import com.squareup.picasso.*;
 import java.util.*;
 import org.json.*;
@@ -23,6 +22,7 @@ import ru.chitaigorod.android.interfaces.*;
 import ru.chitaigorod.android.listeners.*;
 
 import ru.chitaigorod.android.R;
+import android.view.View.*;
 
 public class CartRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 {
@@ -46,15 +46,20 @@ public class CartRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             viewHolderProduct.cartProductQuantity.setMaxValue(cartProductItem.getMaxQuantity());
 			viewHolderProduct.cartProductQuantity.setValue(cartProductItem.getQuantity());
 			
-			viewHolderProduct. cartProductCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+			viewHolderProduct.cartProductCheck.setChecked(cartProductItems.get(position).isChecked());
+			viewHolderProduct. cartProductCheck.setOnClickListener(new OnClickListener(){
+
 					@Override
-					public void onCheckedChanged(CompoundButton p1, boolean p2)
+					public void onClick(View p1)
 					{
+						
 						EntryProductCart newItem = cartProductItems.get(position);
-						newItem.setChecked(p2);
+						newItem.setChecked(!newItem.isChecked());
 						cartProductItems.set(position, newItem);
 						sendCurrBasket();
-					}			
+					}
+					
+								
 				});
 			viewHolderProduct.cartProductQuantity.setChangeListener(new HorizontalCounterInterface(){
 					@Override
@@ -219,6 +224,10 @@ public class CartRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         public void bindContent(EntryProductCart cartProductItem) {
             this.cartProductItem = cartProductItem;
+			
+			
+			//cartProductCheck.setChecked(cartProductItem.isChecked());
+			
         }
     }
 	}

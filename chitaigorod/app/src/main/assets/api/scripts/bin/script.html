@@ -133,7 +133,7 @@ API.CartFragment.getBasket = function(param){
 API.CartFragment.onGoOrder = function(param){
 	account.checkAuth(function(isAuth){
 		console.log(isAuth);
-		if(Boolean(isAuth)){		
+		if(isAuth == "true"){		
 			
 		$.ajax({
 			method: 'POST',

@@ -38,6 +38,7 @@ public class MyWebViewClient extends WebViewClient
 		
 		String file = isMyRes(uri);
 
+		/*
 		if (file != null){
 			try {				
 				File fil = new File("/storage/emulated/0/cg/chitaigorod/app/src/main/assets/"+file);
@@ -58,7 +59,7 @@ public class MyWebViewClient extends WebViewClient
 			} catch (IOException e) {
 				// Handle exceptions here
 			}
-		}
+		}*/
 		//String buff = Utils.getJSByTag((AppCompatActivity)getApplicationContext(), isMyRes(uri));
 		if(isMyRes(uri) != null){
 			InputStream gg = null;
@@ -84,6 +85,7 @@ public class MyWebViewClient extends WebViewClient
 		Uri uri = request.getUrl();
 		String file = isMyRes(uri);
 
+		/*
 		if (file != null){
 			try {				
 				File fil = new File("/storage/emulated/0/cg/chitaigorod/app/src/main/assets/"+file);
@@ -104,7 +106,7 @@ public class MyWebViewClient extends WebViewClient
 			} catch (IOException e) {
 				// Handle exceptions here
 			}
-		}
+		}*/
 		
 		//String buff = Utils.getJSByTag((AppCompatActivity)getApplicationContext(), isMyRes(uri));
 		if(isMyRes(uri) != null){

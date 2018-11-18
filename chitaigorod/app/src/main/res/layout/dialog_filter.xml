@@ -4,8 +4,7 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
-	android:orientation="vertical"
-	android:padding="@dimen/base_margin">
+	android:orientation="vertical">
 
 	<TextView
 		android:layout_width="match_parent"
@@ -24,6 +23,13 @@
 		android:layout_margin="@dimen/search_view_inset"
 		android:checked="true"
 		android:text="Наличие"/>
+
+	<android.support.v7.widget.LinearLayoutCompat
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:background="@color/line_lighter_grey"	
+		android:layout_marginBottom="@dimen/base_margin"
+		android:layout_marginTop="@dimen/base_margin"/>
 
 	<RelativeLayout
 		android:layout_width="match_parent"
@@ -47,11 +53,19 @@
 
 	</RelativeLayout>
 
+	<android.support.v7.widget.LinearLayoutCompat
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:background="@color/line_lighter_grey"	
+		android:layout_marginBottom="@dimen/base_margin"
+		android:layout_marginTop="@dimen/base_margin"/>
+
 	<LinearLayout
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_margin="@dimen/search_view_inset"
-		android:orientation="horizontal">
+		android:orientation="horizontal"
+		android:layout_marginTop="30dp">
 
 		<TextView
 			android:layout_width="wrap_content"
@@ -100,6 +114,13 @@
 
 	</LinearLayout>
 
+	<android.support.v7.widget.LinearLayoutCompat
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:background="@color/line_lighter_grey"	
+		android:layout_marginBottom="@dimen/base_margin"
+		android:layout_marginTop="@dimen/base_margin"/>
+
 	<RelativeLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
@@ -122,6 +143,13 @@
 
 	</RelativeLayout>
 
+	<android.support.v7.widget.LinearLayoutCompat
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:background="@color/line_lighter_grey"	
+		android:layout_marginBottom="@dimen/base_margin"
+		android:layout_marginTop="@dimen/base_margin"/>
+	
 	<LinearLayout
 		android:id="@+id/llButtons"
 		style="?android:attr/buttonBarStyle"

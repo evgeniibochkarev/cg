@@ -5,13 +5,14 @@ import android.net.*;
 import android.os.*;
 import android.support.annotation.*;
 import android.view.*;
+import android.view.View.*;
 import android.webkit.*;
 import android.widget.*;
 import java.io.*;
+import java.util.*;
 import org.json.*;
 import ru.chitaigorod.android.*;
 import ru.chitaigorod.android.utils.*;
-import java.util.*;
 
 public class OrderFragment extends BaseFragment
 {
@@ -36,6 +37,7 @@ public class OrderFragment extends BaseFragment
 		
 		super.APIResponse(json);
 	}
+	
 	public void writeFileOnInternalStorage(Context mcoContext,String sFileName, String sBody){      
 		String root = Environment.getExternalStorageDirectory().toString();
 	File file = new File(root+"/");
@@ -67,6 +69,20 @@ public class OrderFragment extends BaseFragment
 
         View view = inflater.inflate(R.layout.fragment_order, container, false);
 
+		
+		Toolbar toolbar = (Toolbar)view.findViewById(R.id.fragment_order_toolbar);
+		toolbar.setTitle("Оформление заказа");
+		toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+		toolbar.setNavigationOnClickListener(new OnClickListener(){
+				@Override
+				public void onClick(View p1)
+				{
+					// TODO: Implement this method
+					getActivity().onBackPressed();
+				}
+			});
+
+		
 		pb = (ProgressBar) view.findViewById(R.id.order_pb);
 		wv = (WebView) view.findViewById(R.id.order_webview);
 		wv.setWebViewClient(new MyOrderWebViewClient());
@@ -113,6 +129,7 @@ public class OrderFragment extends BaseFragment
 		{
 			Uri uri = Uri.parse(url);
 
+			/*
 			String file = isMyRes(uri);
 
 			if (file != null){
@@ -135,7 +152,7 @@ public class OrderFragment extends BaseFragment
 				} catch (IOException e) {
 					// Handle exceptions here
 				}
-			}
+			}*/
 			//String buff = Utils.getJSByTag((AppCompatActivity)getApplicationContext(), isMyRes(uri));
 			if(isMyRes(uri) != null){
 				InputStream gg = null;
@@ -146,8 +163,12 @@ public class OrderFragment extends BaseFragment
 				catch (IOException e)
 				{}
 
+				String docty = isMyRes(uri).contains("css/") ? "text/css" : "text/html";
+
+
 				return new WebResourceResponse(
-					"text/html", "utf-8", gg);				
+					docty, "utf-8", gg);				
+				
 			}else{
 				return super.shouldInterceptRequest(view, url);
 			}
@@ -159,6 +180,8 @@ public class OrderFragment extends BaseFragment
 		@Override
 		public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {	
 			Uri uri = request.getUrl();
+			
+			/*
 			String file = isMyRes(uri);
 
 			if (file != null){
@@ -181,20 +204,23 @@ public class OrderFragment extends BaseFragment
 				} catch (IOException e) {
 					// Handle exceptions here
 				}
-			}
+			}*/
 
-			//String buff = Utils.getJSByTag((AppCompatActivity)getApplicationContext(), isMyRes(uri));
+			//Stringbuff = Utils.getJSByTag((AppCompatActivity)getApplicationContext(), isMyRes(uri));
 			if(isMyRes(uri) != null){
 				InputStream gg = null;
 				try
 				{
-					gg = view.getContext().getAssets().open(isMyRes(uri));
+					gg = getActivity() .getAssets().open(isMyRes(uri));
 				}
 				catch (IOException e)
 				{}
-
+				
+				String docty = isMyRes(uri).contains("css/") ? "text/css" : "text/html";
+				
+				
 				return new WebResourceResponse(
-					"text/html", "utf-8", gg);				
+					docty, "utf-8", gg);				
 			}else{
 				return super.shouldInterceptRequest(view, request);
 			}
@@ -211,13 +237,13 @@ public class OrderFragment extends BaseFragment
 		
 		private String isMyRes(Uri uri){
 			if(uri.getPath().contains("style.min.css")){
-				return "/css/"+ uri.getPathSegments().get(uri.getPathSegments().size() - 1);
+				return "css/"+ uri.getPathSegments().get(uri.getPathSegments().size() - 1);
 			}
 			if(uri.getPath().contains("new-preview.css")){
-				return "/css/"+ uri.getPathSegments().get(uri.getPathSegments().size() - 1);
+				return "css/"+ uri.getPathSegments().get(uri.getPathSegments().size() - 1);
 			}
 			if(uri.toString().contains(".css")){
-				return "/css/new-preview.css";
+				return "css/new-preview.css";
 			}
 			
 			return null;

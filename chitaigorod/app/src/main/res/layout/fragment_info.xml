@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical">
+	
+	<android.support.v7.widget.AppCompatTextView
+		android:id="@+id/fragment_main_page_textView_head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Читай город"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="30sp" />
+
+    <android.support.v7.widget.LinearLayoutCompat
+		android:id="@+id/fragment_main_page_line_head"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+		android:layout_below="@id/fragment_main_page_textView_head"
+        android:background="@color/colorPrimary" />
+	
+
+
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/fragment_info_about"
+		android:layout_margin="@dimen/search_view_inset">
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="О компании"/>
+
+	</RelativeLayout>
+
+	<android.support.v7.widget.LinearLayoutCompat
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:background="@color/line_lighter_grey"
+		android:layout_marginBottom="@dimen/base_margin"
+		android:layout_marginTop="@dimen/base_margin"/>
+
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/fragment_info_delivery"
+		android:layout_margin="@dimen/search_view_inset">
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Доставка"/>
+
+	</RelativeLayout>
+
+	<android.support.v7.widget.LinearLayoutCompat
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:background="@color/line_lighter_grey"
+		android:layout_marginBottom="@dimen/base_margin"
+		android:layout_marginTop="@dimen/base_margin"/>
+
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/fragment_info_payment"
+		android:layout_margin="@dimen/search_view_inset">
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Оплата заказов"/>
+
+	</RelativeLayout>
+
+	<android.support.v7.widget.LinearLayoutCompat
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:background="@color/line_lighter_grey"
+		android:layout_marginBottom="@dimen/base_margin"
+		android:layout_marginTop="@dimen/base_margin"/>
+
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/fragment_info_privacy_policy"
+		android:layout_margin="@dimen/search_view_inset">
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Политика конфиденциальности"/>
+
+	</RelativeLayout>
+
+	<android.support.v7.widget.LinearLayoutCompat
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:background="@color/line_lighter_grey"
+		android:layout_marginBottom="@dimen/base_margin"
+		android:layout_marginTop="@dimen/base_margin"/>
+
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/fragment_info_sales_rules"
+		android:layout_margin="@dimen/search_view_inset">
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Правила продажи"/>
+
+	</RelativeLayout>
+
+	<android.support.v7.widget.LinearLayoutCompat
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:background="@color/line_lighter_grey"
+		android:layout_marginBottom="@dimen/base_margin"
+		android:layout_marginTop="@dimen/base_margin"/>
+
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/fragment_info_phone"
+		android:layout_margin="@dimen/search_view_inset">
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Звонок оператору (бесплатно)"
+			android:textColor="@color/cg_blue"
+			android:gravity="center"/>
+
+	</RelativeLayout>
+
+</LinearLayout>
+

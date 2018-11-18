@@ -64,7 +64,7 @@ define([ 'jquery'], function () {
 		$.ajax({
 					type: "post",
 					data : param,
-					url: "/login/order.php",
+					url: "/login/registration.php",
 					success: function (data) {  					  
 						var result = JSON.parse(data);                           
 						
@@ -72,6 +72,9 @@ define([ 'jquery'], function () {
 						
 						callback(result);		
 						
+					},
+					error: function(e){
+						console.log(JSON.stringify(e));
 					}
 				})
 	}

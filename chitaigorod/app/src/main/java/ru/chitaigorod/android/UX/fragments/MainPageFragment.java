@@ -26,6 +26,9 @@ public class MainPageFragment extends BaseFragment
 			
 			if(method.contains("MainPageFragment.getHtml")){
 				rv0Text.setText(((JSONObject)data.get(0)).getString("title"));
+				rv1Text.setText(((JSONObject)data.get(1)).getString("title"));
+				rv2Text.setText(((JSONObject)data.get(2)).getString("title"));
+				rv3Text.setText(((JSONObject)data.get(3)).getString("title"));
 				
 				
 				rv0Adapter.addProducts(((JSONObject)data.get(0)).getJSONArray("body"));
@@ -95,7 +98,7 @@ public class MainPageFragment extends BaseFragment
 					mFragmentNavigation.pushFragment(ItemViewerFragment.newInstance(id));
 				}						
 			});
-		rv1.setAdapter(rv0Adapter);
+		rv1.setAdapter(rv1Adapter);
 		
 		
 		rv2 = (RecyclerView) view.findViewById(R.id.fragment_main_page_recyclerView2);		
@@ -107,7 +110,7 @@ public class MainPageFragment extends BaseFragment
 					mFragmentNavigation.pushFragment(ItemViewerFragment.newInstance(id));
 				}						
 			});
-		rv2.setAdapter(rv0Adapter);
+		rv2.setAdapter(rv2Adapter);
 		
 		
 		rv3 = (RecyclerView) view.findViewById(R.id.fragment_main_page_recyclerView3);		
@@ -119,7 +122,7 @@ public class MainPageFragment extends BaseFragment
 					mFragmentNavigation.pushFragment(ItemViewerFragment.newInstance(id));
 				}						
 			});
-		rv3.setAdapter(rv0Adapter);
+		rv3.setAdapter(rv3Adapter);
 		
 		return view;
 	}

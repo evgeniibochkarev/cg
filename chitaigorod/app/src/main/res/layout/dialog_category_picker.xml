@@ -14,6 +14,9 @@
 			android:id="@+id/dialog_category_picker_toolbar"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
+			app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+			app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+			
 			android:background="@color/cg_blue">
 
 		</android.support.v7.widget.Toolbar>
