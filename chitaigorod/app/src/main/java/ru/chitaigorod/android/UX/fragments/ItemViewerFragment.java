@@ -1,5 +1,6 @@
 package ru.chitaigorod.android.UX.fragments;
 
+import android.content.*;
 import android.graphics.*;
 import android.os.*;
 import android.support.v7.widget.*;
@@ -34,6 +35,7 @@ public class ItemViewerFragment extends BaseFragment
     // Fields referencing product related views.
     private ResizableImageViewHeight productMainImage;
 	private TextView productName;
+	private String   productId = "";
 	private TextView productAuthor;
     private TextView productPriceDiscount;
     private TextView productPrice;
@@ -48,14 +50,17 @@ public class ItemViewerFragment extends BaseFragment
 	private String id;
 
 	private Toolbar toolbar;
-    /**
-     * Refers to the displayed product.
-     */
-   
-    /**
-     * Refers to a user-selected product variant
-     */
+
+	/*
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+	{
+		// TODO: Implement this method
+        inflater.inflate(R.menu.item_viewer_menu, menu);
+		super.onCreateOptionsMenu(menu, inflater);
+	}*/
 	
+
 	
 	public static ItemViewerFragment newInstance(String id){
 		ItemViewerFragment itemViewer = new ItemViewerFragment();
@@ -71,9 +76,31 @@ public class ItemViewerFragment extends BaseFragment
 	{	
 		View view = inflater.inflate(R.layout.item_vewer_fragment, container, false);
 		
+		setHasOptionsMenu(true);
 		toolbar = (Toolbar)view.findViewById(R.id.fragment_itemViewer_toolbar);
 		toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
-		
+		toolbar.inflateMenu(R.menu.item_viewer_menu);
+		toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener(){
+				@Override
+				public boolean onMenuItemClick(MenuItem item)
+				{
+					switch (item.getItemId()) {
+						case R.id.share:
+
+							Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+							sharingIntent.setType("text/plain");
+							String shareBodyText = productName.getText() + "\nhttps://ad.admitad.com/g/q6gfnfvsq01452083376a804937a48/?ulp=https%3A%2F%2Fwww.chitai-gorod.ru%2Fcatalog%2Fbook%2F" + productId;
+							//sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,"Subject here");
+							sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBodyText);
+							startActivity(Intent.createChooser(sharingIntent, "Поделиться..."));
+							return true;
+
+						default:
+							return false;//return super.onOptionsItemSelected(item);
+					}
+					//return false;
+				}	
+		});
 		toolbar.setNavigationOnClickListener(new OnClickListener(){
 				@Override
 				public void onClick(View p1)
@@ -132,6 +159,7 @@ public class ItemViewerFragment extends BaseFragment
 				if(item == null)
 					item = new Item_book(json.getJSONObject("item"));
 
+				productId = item.getBookId();
 				productName.setText(json.getJSONObject("data").getString("name"));
 				toolbar.setTitle(productName.getText());
 				productAuthor.setText(item.getAuthor());	

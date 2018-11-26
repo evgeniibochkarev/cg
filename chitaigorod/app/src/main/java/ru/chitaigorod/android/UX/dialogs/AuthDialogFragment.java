@@ -15,6 +15,7 @@ import ru.chitaigorod.android.*;
 import ru.chitaigorod.android.utils.*;
 
 import android.support.v4.app.DialogFragment;
+import ru.chitaigorod.android.interfaces.*;
 
 public class AuthDialogFragment extends BaseDialogFragment 
 {
@@ -37,6 +38,7 @@ public class AuthDialogFragment extends BaseDialogFragment
 
 	private TextInputLayout loginFormReg;
 	
+	private AuthDialogInterface mInterface;
 	
 	@Override
 	public void APIResponse(JSONObject json)
@@ -50,6 +52,8 @@ public class AuthDialogFragment extends BaseDialogFragment
 				if(pd != null) pd.dismiss();
 				
 				if(data.getBoolean("result") ){
+					if(mInterface != null)
+						mInterface.success();
 					dismiss();
 				}else{
 					AlertDialog.Builder adb = new AlertDialog.Builder(getActivity());
@@ -63,7 +67,8 @@ public class AuthDialogFragment extends BaseDialogFragment
 			}else if(method.equals("AuthDialog.reg")){
 				if(pd != null) pd.dismiss();
 				if(!data.isNull( "USERID") ){
-					
+					if(mInterface != null)
+						mInterface.success();
 					dismiss();
 				}
 				if(!data.isNull("EMAIL") ){
@@ -100,6 +105,12 @@ public class AuthDialogFragment extends BaseDialogFragment
 
 
 
+	public static AuthDialogFragment newInstance(AuthDialogInterface _interface){
+		AuthDialogFragment frag = new AuthDialogFragment();
+		frag.mInterface = _interface;
+		
+		return frag;
+	}
     
 
 	public static AuthDialogFragment newInstance( ) {

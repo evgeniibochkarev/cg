@@ -1,9 +1,12 @@
 package ru.chitaigorod.android.UX.fragments;
+
+
 import android.annotation.*;
 import android.content.*;
 import android.net.*;
 import android.os.*;
 import android.support.annotation.*;
+import android.support.v7.widget.*;
 import android.view.*;
 import android.view.View.*;
 import android.webkit.*;
@@ -13,6 +16,8 @@ import java.util.*;
 import org.json.*;
 import ru.chitaigorod.android.*;
 import ru.chitaigorod.android.utils.*;
+
+import android.support.v7.widget.Toolbar;
 
 public class OrderFragment extends BaseFragment
 {
@@ -25,12 +30,16 @@ public class OrderFragment extends BaseFragment
 	{
 		try
 		{
+			String method = json.getString("method");
 			String data = json.getString("data");
 			//writeFileOnInternalStorage(getActivity(), "text.html", data);
 			// writeToFile(data, getActivity());
 			//tv.setText(data);
 			//wv.loadData(data, "text/html; charset=utf-8", "UTF-8");
-			wv.loadUrl("https://ad.admitad.com/g/q6gfnfvsq01452083376a804937a48/?ulp=https%3A%2F%2Fwww.chitai-gorod.ru%2Fpersonal%2Forder.php");
+			if(method.equals("OrderFragment.getOrderPage")){
+				
+			}
+				
 		}
 		catch (JSONException e)
 		{}
@@ -88,7 +97,23 @@ public class OrderFragment extends BaseFragment
 		wv.setWebViewClient(new MyOrderWebViewClient());
 		
 		wv.getSettings().setJavaScriptEnabled(true);
-	
+
+        //metodi optimizacii
+        wv.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
+        wv.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+        wv.getSettings().setAppCacheEnabled(true);
+        wv.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+        wv.getSettings().setDomStorageEnabled(true);
+        wv.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
+        //wv.getSettings().setUseWideViewPort(true);
+        wv.getSettings().setSavePassword(true);
+        wv.getSettings().setSaveFormData(true);
+        wv.getSettings().setEnableSmoothTransition(true);
+
+
+
+		
+		wv.loadUrl("https://ad.admitad.com/g/q6gfnfvsq01452083376a804937a48/?ulp=https%3A%2F%2Fwww.chitai-gorod.ru%2Fpersonal%2Forder.php");
 		mFragmentNavigation.get(APIHelper.getData("OrderFragment.getPage", "{}"));
 		return view;
 	}
@@ -154,6 +179,11 @@ public class OrderFragment extends BaseFragment
 				}
 			}*/
 			//String buff = Utils.getJSByTag((AppCompatActivity)getApplicationContext(), isMyRes(uri));
+			if(blockRes(uri)){
+				return new WebResourceResponse(
+					"text/javascript", "utf-8", null);							
+			}
+			
 			if(isMyRes(uri) != null){
 				InputStream gg = null;
 				try
@@ -207,6 +237,11 @@ public class OrderFragment extends BaseFragment
 			}*/
 
 			//Stringbuff = Utils.getJSByTag((AppCompatActivity)getApplicationContext(), isMyRes(uri));
+			if(blockRes(uri)){
+				return new WebResourceResponse(
+					"text/javascript", "utf-8", null);							
+			}
+			
 			if(isMyRes(uri) != null){
 				InputStream gg = null;
 				try
@@ -231,10 +266,31 @@ public class OrderFragment extends BaseFragment
 		{
 			pb.setVisibility(View.GONE);
 			wv.setVisibility(View.VISIBLE);
+			
+			
 			super.onPageFinished(view, url);
 		}
 
-		
+		private boolean blockRes(Uri uri){
+			List blockList = new ArrayList();
+			blockList.add("elasticsearch.angular.js");
+			
+			List blockListDomain = new ArrayList();
+			blockListDomain.add("jivosite");
+			blockListDomain.add("facebook.com");
+			blockListDomain.add("vk.com");
+			
+			for(String domain : blockListDomain)
+				if(uri.getHost().contains(domain))
+					return true;
+			
+			//block to filename
+			for(String bl : blockList)
+				if(uri.toString().contains(bl))
+					return true;
+					
+			return false;
+		}
 		private String isMyRes(Uri uri){
 			if(uri.getPath().contains("style.min.css")){
 				return "css/"+ uri.getPathSegments().get(uri.getPathSegments().size() - 1);

@@ -188,7 +188,10 @@ API.OrderFragment.getPage = function(param){
 }
 API.MainPageFragment = {};
 
+API.MainPageFragment.lastHtml = null;
+
 API.MainPageFragment.getHtml = function(param){
+if(API.MainPageFragment.lastHtml == null){
 	$.ajax({
 					type: "post",
 					//data : param,
@@ -220,9 +223,32 @@ API.MainPageFragment.getHtml = function(param){
 							}
 							arr.push( {title:title[i].textContent,  body: arrBook});
 						}
+						API.MainPageFragment.lastHtml = arr;
 						console.log("MAGIC{ method:'MainPageFragment.getHtml', data:"+JSON.stringify(arr)+"}");
 					}
 				});
+}else{
+	console.log("MAGIC{ method:'MainPageFragment.getHtml', data:"+JSON.stringify(API.MainPageFragment.lastHtml)+"}")
+}
+}
+
+API.CabinetFragment = {}
+API.CabinetFragment.getProfilePage = function(data){
+	account.checkAuth(function(isAuth){
+		if(isAuth == "true"){		
+			console.log("MAGIC{ method:'CabinetFragment.hideAuthBtn', data:{} }")
+			$.ajax({
+			method: 'POST',
+            url: 'https://www.chitai-gorod.ru/profile/orders/',                 
+			//data: {action: 'delete', id: param.forDel},
+			success: function(data){
+				console.log("MAGIC{ method:'CabinetFragment.showAuthq', data:"+data+" }")
+			}
+			})
+		}else{
+			console.log("MAGIC{ method:'CabinetFragment.showAuth', data:{} }")
+		}
+	});
 }
 
 API.MainPageFragment.getHtml(null);

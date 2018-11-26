@@ -270,7 +270,7 @@ public class ProductsRecyclerAdapter extends RecyclerView.Adapter<ProductsRecycl
 			v.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						if(product.getOtherProp() != null)
+	 				//	if(product.getOtherProp() != null)
 							categoryRecyclerInterface.onProductSelected(v, product);
 					}
 				});

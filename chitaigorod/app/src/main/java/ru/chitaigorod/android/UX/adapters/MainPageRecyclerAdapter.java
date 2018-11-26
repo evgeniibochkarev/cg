@@ -103,7 +103,7 @@ public class MainPageRecyclerAdapter extends RecyclerView.Adapter<MainPageRecycl
 
     // Provide a reference to the views for each data item
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public ResizableImageView productImage;
+        public ResizableImageViewHeight productImage;
         public TextView productName;
 		public TextView productAuthor;
 		public TextView productPrice;
@@ -116,7 +116,7 @@ public class MainPageRecyclerAdapter extends RecyclerView.Adapter<MainPageRecycl
         public ViewHolder(View v, final MainPageRecyclerInterface recyclerInterface) {
             super(v);
 
-			productImage = (ResizableImageView) v.findViewById(R.id.product_item_image); 
+			productImage = (ResizableImageViewHeight) v.findViewById(R.id.product_item_image); 
 			productName = (TextView) v.findViewById(R.id.product_item_name);
 			productAuthor = (TextView) v.findViewById(R.id.product_item_author);
 			productStatus = (TextView) v.findViewById(R.id.product_item_status);

@@ -1,0 +1,369 @@
+
+<!DOCTYPE html>
+<html dir="ltr" ng-app="search">
+  <head>
+	<script  src="https://www.chitai-gorod.ru/ii/lib/jquery.min.js"></script>	<script  src="/bitrix/templates/t1/js-lib/jquery-ui-1.8.21.custom.min.js" type="text/javascript"></script>
+	<script  src="https://www.chitai-gorod.ru/local/lib/js/jquery.cookie.js" type="text/javascript"></script>
+	
+	
+<script type="text/javascript">
+  function Popup (pop) {
+	this.pop = pop;
+	this.position = function () {
+		var w = $(this.pop).innerWidth();
+		var h = $(this.pop).height();
+		$(this.pop).css({
+			'top'     : '50%',
+			'left' : '50%',
+			'margin-top' : -(h/2),
+			'margin-left': -(w/2)
+		});
+	};
+
+	this.getProperties = function() {
+		return ($(this.pop).attr('data-pos') === 'n')? false : this.position();
+  };
+
+	this.show = function () {
+		$(document).find('#mask').fadeIn(400);
+		this.getProperties();
+		$(this.pop).removeClass('hidden').addClass('shown');
+	};
+
+	this.hide = function () {
+		$(this.pop).addClass('hidden').removeClass('shown');
+		$(document).find('#mask').fadeOut(400);
+	};
+}
+
+	var popCityBlock = new Popup('.popup-city');
+    
+	var processOnTime = function ( next, delay ) {
+        var d = delay;
+        if (! next){throw new ReferenceError();}
+        if (! d || isNaN(d)) {d = 200;}
+        if ( this.timeoutID ) window.clearTimeout ( this.timeoutID );
+        this.timeoutID = setTimeout ( function () { next(); }, d );
+    };
+	var userCity = {};
+	userCity = {
+		param: {
+			city: "Москва",
+			cityId: "213",
+			timer: 0,
+			reloadPage: true
+		},
+		init: function () {
+			
+			/** click event on city*/
+			$(".jsUserCity").click(function () {
+				userCity.showSelectCityBlock();
+			});
+
+					},
+		geoPosition: function () {
+			/** Try get HTML5 geolocation */
+			if (navigator.geolocation) {
+				/** when the user has sent its position in Google */
+				navigator.geolocation.getCurrentPosition(function (position) {
+					var lat = position.coords.latitude;
+					var lng = position.coords.longitude;
+					$.ajax({
+						tyle: "POST",
+						url: "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + lng + "&sensor=false&language=ru",
+						success: function (data) {
+							res = data.results[0].address_components;
+							$.each(res, function (index, key) {
+								if ($.inArray("locality", key.types) >= 0) {
+									/********************************************
+ *    send the name of the city,
+ *    which received from Google and
+ *    return a list of cities which match
+ ********************************************/
+									userCity.showSelectCityBlock();
+									userCity.showChangeCityBlock();
+									$('#citySearch').val(key.long_name);
+									$('#citySearch').keyup();
+								}
+							});
+						}
+					});
+				});
+
+							}
+			else {
+				/** Browser doesn't support Geolocation. Set default value */
+				userCity.agree();
+			}
+		},
+		checkCity: function () {
+			if (typeof $.cookie('cityName') == 'undefined') {
+				/** if user first on site*/
+				userCity.showSelectCityBlock();
+				/** set timer for agree the default value */
+				userCity.timer = setTimeout(userCity.agree, 6000);
+			}
+			else {
+				/** set user param from cookies*/
+				userCity.param.city = $.cookie('cityName');
+				userCity.param.cityId = $.cookie('cityId');
+				userCity.changeAllCityText();
+			}
+		},
+		setCity: function () {
+			$.cookie('cityName', userCity.param.city, {path: '/', domain: '.chitai-gorod.ru'});
+			$.cookie('cityId', userCity.param.cityId, {path: '/', domain: '.chitai-gorod.ru'});
+			userCity.changeAllCityText();
+
+							userCity.saveCity();
+					},
+		saveCity: function () {
+			/********************************************
+ *    if user is auth, save to profile and
+ *    the ID in the profile if it is
+ ********************************************/
+			if (parseInt(userCity.param.cityId) > 0) {
+				$.ajax({
+					type: "POST",
+					url: "https://www.chitai-gorod.ru/api/kav/city.php",
+					data: {city: userCity.param.cityId},
+					success: function () {
+						if (userCity.param.reloadPage) {
+							location.reload();
+						}
+					}
+				});
+			}
+		},
+		agree: function () {
+			/** when the user agrees to the shown city*/
+			userCity.setCity();
+			userCity.changeAllCityText();
+			userCity.hideSelectCityBlock();
+		},
+		changeAllCityText: function () {
+			/** first change on full city name*/
+			$('.jsUserCity').each(function () {
+				$(this).text(userCity.param.city);
+			});
+
+			/** then change on short city name if has class jsUserCityShort*/
+			$('.jsUserCityShort').each(function () {
+				$(this).text(userCity.param.city.substr(0, 20) + "...");
+			});
+		},
+		autoloadCityListSelect: function (city_name, city_id) {
+			/** click event on the city from the autoload list*/
+			userCity.param.city = city_name;
+			userCity.param.cityId = city_id;
+
+			popCityBlock.hide();
+			$("#citySearch").val("");
+			$(".citySuggest li").remove();
+
+			userCity.setCity();
+		},
+        autoloadNewCityListSelect: function (city_name) {
+            /** click event on the new suggested city from the autoload list*/
+            $.ajax({
+                url: "https://www.chitai-gorod.ru/api/kav/city.php",
+                data: {city: city_name, check_city: true},
+                dataType: 'json',
+                success: function (data) {
+                    if (data.name) {
+                        userCity.param.city = data.name;
+                        userCity.param.cityId = data.id;
+
+                        popCityBlock.hide();
+                        $("#citySearch").val("");
+                        $(".citySuggest li").remove();
+
+                        userCity.setCity();
+                    } else console.log('select new city error',data);
+                }
+            });
+
+        },
+		showSelectCityBlock: function () {
+
+			userCity.param.reloadPage = true;
+			
+			$("#yourCity").text(userCity.param.city);
+			$('.popup-city').find('.step2').removeClass('activeStep');
+			$('.popup-city').find('.step1').addClass('activeStep');
+			popCityBlock.show();
+		},
+		hideSelectCityBlock: function () {
+			popCityBlock.hide();
+		},
+		showChangeCityBlock: function () {
+			$('.popup-city').find('.step1').removeClass('activeStep');
+			$('.popup-city').find('.step2').addClass('activeStep');
+			$('.citySuggest').slideDown(100);
+			clearTimeout(userCity.timer);
+		},
+		findCity: function (city) {
+			/** send ajax to search page and return html list of cities*/
+			$.ajax({
+				url: 'https://www.chitai-gorod.ru/api/kav/city.php?city=' + decodeURIComponent(city),
+				success: function (data) {
+				    console.log(JSON.stringify(data));
+					$(".citySuggest li").remove();
+					$(".citySuggest").append(data);
+				},
+				error: function(data){
+				  console.log(JSON.stringify(data));
+				}
+			});
+		}
+	};
+
+	function get_city_suggest(){
+        //processOnTime(function () {
+            userCity.findCity($('#citySearch').val());
+        //},250);
+    }
+
+	$(document).ready(function () {
+		userCity.init();
+	});
+</script>
+	<style type="text/css">
+	  
+.popup-city{
+    position:fixed;
+    top:50%;
+    left:50%;
+    margin-left:-150px;
+    margin-right:15px;
+    z-index:100;
+    box-sizing:border-box;
+    min-width:300px;
+    max-width:900px;
+    width:auto;
+    min-height:90px;
+    padding:20px;
+    background-color:#fff;
+    border-radius:3px;
+    box-shadow:0 2px 3px 0 #aaa
+}
+.popup-city:before,.user-menu:after{
+    position:absolute;
+    top:-10px;
+    width:0;
+    height:0;
+    border-bottom:10px solid #fff
+}
+.popup-city:before{
+    left:20px;
+    display:block;
+    border-right:15px solid transparent
+}
+.popup-city .text{
+    font-size:16px;
+    margin:0
+}
+.popup-city #citySearch{
+    color:#666;
+    font-size:14px;
+    width:240px
+}
+.popup-city .descr{
+    margin:0;
+    font-size:12px;
+    color:gray
+}
+.popup-city .citySuggest{
+    
+    font-size:14px;
+    list-style:none;
+    margin:15px 0;
+    padding:0
+}
+.popup-city .citySuggest li{
+    display:block;
+    color:#929497;
+    cursor:pointer;
+    padding:5px 0;
+    zoom:1
+}
+.popup-city .citySuggest li:hover{
+    color:#6d6e70
+}
+.popup-city .step1,.popup-city .step2{
+    
+}
+.popup-city .step2{
+    margin-bottom:15px
+}
+.popup-city .activeStep{
+    display:block
+}
+#cityChange,#cityYes{
+    font-size:16px;
+    display:inline-block;
+    margin-top:10px;
+    margin-bottom:10px;
+    cursor:pointer
+}
+#cityYes{
+    padding:0 30px;
+    margin-right:25px;
+    background-color:#26a9e0;
+    border-radius:3px;
+    color:#fff;
+    line-height:35px
+}
+#cityChange{
+    background-color:transparent;
+    color:#aaa;
+    border-bottom:1px solid
+}
+
+.fieldset{
+  border:0 none;
+}
+#mask{
+    position:fixed;
+top:0px;
+left:0px;
+width:100%;
+height:100%;
+    background-color:rgba(0,0,0,.2);
+    z-index:99;
+    cursor:pointer
+}
+
+
+
+
+.order__cart-items{
+    width:100%;
+    margin-bottom:10px;
+    border-bottom:1px solid #b3b3b3
+}
+.order__cart-items .cart-items__header{
+    height:auto
+}
+
+
+	  </style>
+  </head>
+  <body>
+
+
+	<div class="popup popup-city">
+	  <div class="step1">
+        <p class="text">Ваш город - <span id="yourCity"></span></p>
+        <a id="cityYes" class="city__btn" onclick="userCity.agree();">Да</a>
+        <a class="city__btn" id="cityChange" onclick="userCity.showChangeCityBlock();">Изменить</a>
+	  </div>
+	  <div class="step2">
+        <input type="text" placeholder="введите название своего города" onkeyup="get_city_suggest()" id="citySearch" class="input"/>
+        <ul class="citySuggest"></ul>
+	  </div>
+	  <p class="descr">От выбранного города зависят способы доставки</p>
+	</div>
+
+  </body>
+</html>

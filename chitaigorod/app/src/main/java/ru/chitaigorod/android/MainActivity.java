@@ -1,21 +1,23 @@
 package ru.chitaigorod.android;
 
+
+
+import android.content.*;
+import android.net.*;
 import android.os.*;
 import android.support.annotation.*;
 import android.support.v4.app.*;
 import android.support.v7.app.*;
+import android.webkit.*;
+import android.widget.*;
 import com.roughike.bottombar.*;
-import java.util.*;
 import ru.chitaigorod.android.*;
+import ru.chitaigorod.android.UX.custom_view.*;
+import ru.chitaigorod.android.UX.dialogs.*;
 import ru.chitaigorod.android.UX.fragments.*;
+import ru.chitaigorod.android.utils.*;
 
 import ru.chitaigorod.android.R;
-
-import ru.chitaigorod.android.UX.custom_view.*;
-import ru.chitaigorod.android.utils.*;
-import android.webkit.*;
-import ru.chitaigorod.android.UX.dialogs.*;
-import java.util.concurrent.*;
 
 public class MainActivity extends AppCompatActivity implements FragNavController.TransactionListener, FragNavController.RootFragmentListener ,  OnTabReselectListener, OnTabSelectListener, BaseFragment.FragmentNavigation, BaseDialogFragment.FragmentNavigation// FragNavController.TransactionListener, FragNavController.RootFragmentListener ,ontab//BaseFragment.BaseFragmentCallbacks
 {
@@ -27,7 +29,26 @@ public class MainActivity extends AppCompatActivity implements FragNavController
 		nearby.setBadgeCount(count);
 		
 	}
-	
+	public static boolean hasConnection(final Context context)
+	{
+		ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+		if (wifiInfo != null && wifiInfo.isConnected())
+		{
+			return true;
+		}
+		wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+		if (wifiInfo != null && wifiInfo.isConnected())
+		{
+			return true;
+		}
+		wifiInfo = cm.getActiveNetworkInfo();
+		if (wifiInfo != null && wifiInfo.isConnected())
+		{
+			return true;
+		}
+		return false;
+	}
 	@Override
 	public void onTabSelected(@IdRes int menuItemId) {
 		switch (menuItemId) {
@@ -126,12 +147,29 @@ public class MainActivity extends AppCompatActivity implements FragNavController
 		// включаем поддержку JavaScript
 		wv.getSettings().setDomStorageEnabled(true);
 		wv.getSettings().setJavaScriptEnabled(true);
+		
+		//wv.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
+        wv.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+        wv.getSettings().setAppCacheEnabled(true);
+       // wv.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+       // wv.getSettings().setDomStorageEnabled(true);
+       // wv.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
+        //wv.getSettings().setUseWideViewPort(true);
+        wv.getSettings().setSavePassword(true);
+        wv.getSettings().setSaveFormData(true);
+        wv.getSettings().setEnableSmoothTransition(true);
+		
+		showDialog(CityPickerDialogFragment.newInstance());
+		
 		// указываем страницу загрузки
 		wv.loadUrl("https://www.chitai-gorod.ru/"); 
 		
 		}
 
 	public void get(String req) {
+		if(!hasConnection(getApplicationContext())){
+			Toast.makeText(getApplicationContext(), "отсутствует интернет соединение", Toast.LENGTH_LONG).show();
+		}
 		if(wv != null){
 			wv.loadUrl(req);
 		}

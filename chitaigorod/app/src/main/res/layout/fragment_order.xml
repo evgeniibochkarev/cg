@@ -5,14 +5,12 @@
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
 	android:orientation="vertical">
-	
 	<android.support.v7.widget.Toolbar
 		android:id="@+id/fragment_order_toolbar"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
 		app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-
 		android:background="@color/cg_blue"/>
 	<WebView
 		android:id="@+id/order_webview"

@@ -9,8 +9,8 @@ android {
         applicationId "ru.chitaigorod.android"
         minSdkVersion 15
         targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "2.0.1"
     }
     buildTypes {
         release {
@@ -26,7 +26,7 @@ dependencies {
 	compile 'com.roughike:bottom-bar:2.3.1'
 	compile 'com.squareup.picasso:picasso:2.71828'
 	// https://mvnrepository.com/artifact/mbanje.kurt/fabbutton
-compile 'mbanje.kurt:fabbutton:1.2.1'
+//compile 'mbanje.kurt:fabbutton:1.2.1'
 
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }

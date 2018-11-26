@@ -16,14 +16,14 @@
         android:textColor="@color/colorPrimaryDark"
         android:textSize="30sp" />
 
-    <android.support.v7.widget.LinearLayoutCompat
-		android:id="@+id/fragment_main_page_line_head"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-		android:layout_below="@id/fragment_main_page_textView_head"
-        android:background="@color/colorPrimary" />
+    
 	
-
+	<android.support.v7.widget.LinearLayoutCompat
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:background="@color/line_lighter_grey"
+		android:layout_marginBottom="@dimen/base_margin"
+		android:layout_marginTop="@dimen/base_margin"/>
 
 	<RelativeLayout
 		android:layout_width="match_parent"
