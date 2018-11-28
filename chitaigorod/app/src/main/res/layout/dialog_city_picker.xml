@@ -1,18 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-		xmlns:app="http://schemas.android.com/apk/res-auto"
-		xmlns:tools="http://schemas.android.com/tools"
-		android:id="@+id/dialog_city_pickerparent_view"
-		android:layout_width="wrap_content"
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/dialog_city_pickerparent_view"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:fitsSystemWindows="true"
+	tools:context=".MainActivity">
+	<android.support.v7.widget.Toolbar
+		android:id="@+id/dialog_city_picker_toolbar"
+		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:fitsSystemWindows="true"
-		tools:context=".MainActivity">
-
-        <WebView
-			android:id="@+id/dialog_city_webview"
-			
-			android:layout_width="wrap_content"
+		app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+		app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+		android:background="@color/cg_blue">
+	</android.support.v7.widget.Toolbar>
+	
+	
+		<AutoCompleteTextView
+			android:id="@+id/dialog_city_name_text"
+			android:layout_below="@id/dialog_city_picker_toolbar"		
+			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-		/>
-    </RelativeLayout>
+			android:hint="Введите название города"
+			android:visibility="gone"
+			android:inputType="textEmailAddress"
+			android:maxLines="1"
+			android:paddingEnd="@dimen/base_margin_horizontal_half"
+			android:paddingLeft="@dimen/base_margin_horizontal"
+			android:paddingRight="@dimen/base_margin_horizontal_half"
+			android:paddingStart="@dimen/base_margin_horizontal"
+			android:singleLine="true"/>
+	
+	<WebView
+		android:id="@+id/dialog_city_webview"
+		android:layout_below="@id/dialog_city_name_text"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"/>
+
+	<ProgressBar
+		android:layout_height="wrap_content"
+		android:layout_below="@id/dialog_city_picker_toolbar"
+		android:layout_width="wrap_content"
+		android:id="@+id/dialogcitypickerProgressBar1"
+		android:visibility="visible"/>
+
+</RelativeLayout>
 

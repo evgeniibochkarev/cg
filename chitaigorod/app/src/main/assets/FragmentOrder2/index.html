@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+	<link href="style.min.css" type="text/css"  rel="stylesheet" />
+	
+	<script  src="https://www.chitai-gorod.ru/ii/lib/jquery.min.js"></script>	<script  src="/bitrix/templates/t1/js-lib/jquery-ui-1.8.21.custom.min.js" type="text/javascript"></script>
+	<script  src="https://www.chitai-gorod.ru/local/lib/js/jquery.cookie.js" type="text/javascript"></script>
+
+	
+	<script type="text/javascript" src="/bitrix/js/main/core/core.js?149209976278911"></script>
+	<script type="text/javascript" src="/bitrix/js/main/core/core_ajax.js?149209976230654"></script>
+	<script type="text/javascript" src="/bitrix/js/main/session.js?14920997622880"></script>
+	<script type="text/javascript" src="/bitrix/js/main/ajax.js?149209976135508"></script>
+
+
+
+
+	<script  src="/ii/lib/jquery.min.js"></script>	<script  src="/bitrix/templates/t1/js-lib/jquery-ui-1.8.21.custom.min.js" type="text/javascript"></script>
+	<script  src="/local/lib/js/jquery.cookie.js" type="text/javascript"></script>
+	<script  src="/bitrix/templates/t1/js-lib/jquery.lazyload.min.js" type="text/javascript"></script>
+
+	
+
+	<script src="/bitrix/templates/t1/js-lib/jquery.validate.min.js"></script>
+	<script src="/ii/js/main.js?v=1541289457"></script>
+
+
+
+
+
+
+	<script src="/bitrix/templates/t1/js/partners.js?v=5" type="text/javascript"></script>
+
+	<script src="/bitrix/templates/t1/js/format_url.js" type="text/javascript"></script>
+
+
+	<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-M569KV');</script>
+	<!-- End Google Tag Manager -->
+	<!-- Facebook Pixel Code -->
+
+	<script src="/ii/js/separate-js/array.from.js"></script>
+	<script src="/ii/js/separate-js/order.compiled.js?v=1541289457" defer></script>
+	
+<script type="text/javascript">
+ 
+	$(document).ready(function () {
+		console.log("Order2onPageReady");
+		
+		$.ajax({
+			method: 'POST',
+            url: 'https://www.chitai-gorod.ru/personal/order.php',                 
+			dataType: "html",
+			success: function (data) {  		
+				var parser = new DOMParser();  
+				var doc = parser.parseFromString(data, "text/html");
+	            document.body.innerHTML = doc.getElementsByClassName("order-wrap")[0].innerHTML;
+				
+				$(".choseCityKLP").click(function(){
+				  console.log("ORDER2showCityPicker")
+				})
+				
+			}
+		})
+	});
+	
+</script>
+<style type="text/css">
+
+
+</style>
+  </head>
+  <body>
+
+tt
+
+  </body>
+</html>

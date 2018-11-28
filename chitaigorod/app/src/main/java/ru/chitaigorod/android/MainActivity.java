@@ -159,8 +159,7 @@ public class MainActivity extends AppCompatActivity implements FragNavController
         wv.getSettings().setSaveFormData(true);
         wv.getSettings().setEnableSmoothTransition(true);
 		
-		showDialog(CityPickerDialogFragment.newInstance());
-		
+			
 		// указываем страницу загрузки
 		wv.loadUrl("https://www.chitai-gorod.ru/"); 
 		

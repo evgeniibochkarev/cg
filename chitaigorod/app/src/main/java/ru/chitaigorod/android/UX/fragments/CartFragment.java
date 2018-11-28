@@ -45,7 +45,7 @@ public class CartFragment extends BaseFragment
 				mFragmentNavigation.showDialog(AuthDialogFragment.newInstance());
 			}
 			if(method.equals("CartFragment.showOrder")){
-				mFragmentNavigation.pushFragment(OrderFragment.newInstance());
+				mFragmentNavigation.pushFragment(Order2Fragment.newInstance());
 			}
 			
 		}

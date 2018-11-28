@@ -37,14 +37,8 @@
 }
 
 	var popCityBlock = new Popup('.popup-city');
-    
-	var processOnTime = function ( next, delay ) {
-        var d = delay;
-        if (! next){throw new ReferenceError();}
-        if (! d || isNaN(d)) {d = 200;}
-        if ( this.timeoutID ) window.clearTimeout ( this.timeoutID );
-        this.timeoutID = setTimeout ( function () { next(); }, d );
-    };
+    popCityBlock.show();
+	
 	var userCity = {};
 	userCity = {
 		param: {
@@ -56,67 +50,21 @@
 		init: function () {
 			
 			/** click event on city*/
-			$(".jsUserCity").click(function () {
-				userCity.showSelectCityBlock();
-			});
+			//$(".jsUserCity").click(function () {
+			//userCity.checkCity();
+			userCity.showChangeCityBlock();
+			//});
 
-					},
-		geoPosition: function () {
-			/** Try get HTML5 geolocation */
-			if (navigator.geolocation) {
-				/** when the user has sent its position in Google */
-				navigator.geolocation.getCurrentPosition(function (position) {
-					var lat = position.coords.latitude;
-					var lng = position.coords.longitude;
-					$.ajax({
-						tyle: "POST",
-						url: "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + lng + "&sensor=false&language=ru",
-						success: function (data) {
-							res = data.results[0].address_components;
-							$.each(res, function (index, key) {
-								if ($.inArray("locality", key.types) >= 0) {
-									/********************************************
- *    send the name of the city,
- *    which received from Google and
- *    return a list of cities which match
- ********************************************/
-									userCity.showSelectCityBlock();
-									userCity.showChangeCityBlock();
-									$('#citySearch').val(key.long_name);
-									$('#citySearch').keyup();
-								}
-							});
-						}
-					});
-				});
-
-							}
-			else {
-				/** Browser doesn't support Geolocation. Set default value */
-				userCity.agree();
-			}
 		},
-		checkCity: function () {
-			if (typeof $.cookie('cityName') == 'undefined') {
-				/** if user first on site*/
-				userCity.showSelectCityBlock();
-				/** set timer for agree the default value */
-				userCity.timer = setTimeout(userCity.agree, 6000);
-			}
-			else {
-				/** set user param from cookies*/
-				userCity.param.city = $.cookie('cityName');
-				userCity.param.cityId = $.cookie('cityId');
-				userCity.changeAllCityText();
-			}
-		},
+		
+		
 		setCity: function () {
 			$.cookie('cityName', userCity.param.city, {path: '/', domain: '.chitai-gorod.ru'});
 			$.cookie('cityId', userCity.param.cityId, {path: '/', domain: '.chitai-gorod.ru'});
-			userCity.changeAllCityText();
+			//userCity.changeAllCityText();
 
-							userCity.saveCity();
-					},
+			userCity.saveCity();
+		},
 		saveCity: function () {
 			/********************************************
  *    if user is auth, save to profile and
@@ -128,35 +76,21 @@
 					url: "https://www.chitai-gorod.ru/api/kav/city.php",
 					data: {city: userCity.param.cityId},
 					success: function () {
-						if (userCity.param.reloadPage) {
-							location.reload();
-						}
+					  console.log("CITYclose")
+						
+					  
 					}
 				});
 			}
 		},
-		agree: function () {
-			/** when the user agrees to the shown city*/
-			userCity.setCity();
-			userCity.changeAllCityText();
-			userCity.hideSelectCityBlock();
-		},
-		changeAllCityText: function () {
-			/** first change on full city name*/
-			$('.jsUserCity').each(function () {
-				$(this).text(userCity.param.city);
-			});
-
-			/** then change on short city name if has class jsUserCityShort*/
-			$('.jsUserCityShort').each(function () {
-				$(this).text(userCity.param.city.substr(0, 20) + "...");
-			});
-		},
+		
+		
 		autoloadCityListSelect: function (city_name, city_id) {
 			/** click event on the city from the autoload list*/
 			userCity.param.city = city_name;
 			userCity.param.cityId = city_id;
 
+			console.log("CITYonSelect");
 			popCityBlock.hide();
 			$("#citySearch").val("");
 			$(".citySuggest li").remove();
@@ -186,21 +120,23 @@
         },
 		showSelectCityBlock: function () {
 
-			userCity.param.reloadPage = true;
+			//userCity.param.reloadPage = true;
 			
 			$("#yourCity").text(userCity.param.city);
 			$('.popup-city').find('.step2').removeClass('activeStep');
-			$('.popup-city').find('.step1').addClass('activeStep');
+			//$('.popup-city').find('.step1').addClass('activeStep');
 			popCityBlock.show();
+			resize();
 		},
 		hideSelectCityBlock: function () {
 			popCityBlock.hide();
 		},
 		showChangeCityBlock: function () {
-			$('.popup-city').find('.step1').removeClass('activeStep');
+			//$('.popup-city').find('.step1').removeClass('activeStep');
 			$('.popup-city').find('.step2').addClass('activeStep');
 			$('.citySuggest').slideDown(100);
-			clearTimeout(userCity.timer);
+			resize();
+			//clearTimeout(userCity.timer);
 		},
 		findCity: function (city) {
 			/** send ajax to search page and return html list of cities*/
@@ -210,6 +146,7 @@
 				    console.log(JSON.stringify(data));
 					$(".citySuggest li").remove();
 					$(".citySuggest").append(data);
+					resize()
 				},
 				error: function(data){
 				  console.log(JSON.stringify(data));
@@ -217,48 +154,19 @@
 			});
 		}
 	};
-
-	function get_city_suggest(){
-        //processOnTime(function () {
-            userCity.findCity($('#citySearch').val());
-        //},250);
-    }
-
+    
+	
+	function resize(){
+	  console.log("CITYresize"+document.body.clientHeight);
+	}
 	$(document).ready(function () {
 		userCity.init();
+		console.log("CITYonPageReady")
 	});
+	
 </script>
 	<style type="text/css">
 	  
-.popup-city{
-    position:fixed;
-    top:50%;
-    left:50%;
-    margin-left:-150px;
-    margin-right:15px;
-    z-index:100;
-    box-sizing:border-box;
-    min-width:300px;
-    max-width:900px;
-    width:auto;
-    min-height:90px;
-    padding:20px;
-    background-color:#fff;
-    border-radius:3px;
-    box-shadow:0 2px 3px 0 #aaa
-}
-.popup-city:before,.user-menu:after{
-    position:absolute;
-    top:-10px;
-    width:0;
-    height:0;
-    border-bottom:10px solid #fff
-}
-.popup-city:before{
-    left:20px;
-    display:block;
-    border-right:15px solid transparent
-}
 .popup-city .text{
     font-size:16px;
     margin:0
@@ -292,6 +200,9 @@
 }
 .popup-city .step1,.popup-city .step2{
     
+}
+.step1{
+  display:none
 }
 .popup-city .step2{
     margin-bottom:15px
@@ -359,10 +270,11 @@ height:100%;
         <a class="city__btn" id="cityChange" onclick="userCity.showChangeCityBlock();">Изменить</a>
 	  </div>
 	  <div class="step2">
-        <input type="text" placeholder="введите название своего города" onkeyup="get_city_suggest()" id="citySearch" class="input"/>
         <ul class="citySuggest"></ul>
+		<p class="descr">От выбранного города зависят способы доставки</p>
+		
 	  </div>
-	  <p class="descr">От выбранного города зависят способы доставки</p>
+	  
 	</div>
 
   </body>
